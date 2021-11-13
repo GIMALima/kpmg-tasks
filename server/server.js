@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const userRoutes = require("./routes/user.routes");
 
 // Create express app.
 const app = express();
@@ -13,6 +14,9 @@ app.use(express.urlencoded({ limit: "30mb", extended: true })); // Parse request
 app.get("/", (req, res) => {
   res.send("Hello to KPMG Task App REST API");
 });
+
+// Routes.
+app.use("/api/user/", userRoutes);
 
 // Setup the server port.
 const PORT = process.env.PORT || 5000;
