@@ -1,5 +1,7 @@
 var con = require("../config/db.config");
+const bcrypt = require("bcrypt");
 
+// User entity.
 var User = function (user) {
   this.firstname = user.firstname;
   this.lastname = user.lastname;
@@ -11,7 +13,11 @@ var User = function (user) {
 };
 
 // Create a new user.
-User.createUser = (userReqData, result) => {
+User.createUser = async (userReqData, result) => {
+  // hash password.
+  const salt = await bcrypt.genSalt();
+  const hashedPassword = await bcrypt.hash(userReqData.password, salt);
+
   if (userReqData.password.length < 6) {
     result("password incorrect", null);
   } else {
@@ -24,6 +30,8 @@ User.createUser = (userReqData, result) => {
         } else if (res[0] && res[0].email.length > 0) {
           result("email already taken", null);
         } else {
+          userReqData.password = hashedPassword;
+
           // Insert new user.
           con.query("INSERT INTO user SET ? ", userReqData, (err, res) => {
             if (err) {
