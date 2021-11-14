@@ -48,4 +48,24 @@ User.createUser = async (userReqData, result) => {
   }
 };
 
+// Check if user exists by email and password.
+User.login = async (userReqData, result) => {
+  con.query(
+    'SELECT * FROM user WHERE email = "' + userReqData.email + '"',
+    async (err, res) => {
+      if (err || res.length == 0) {
+        result("email incorrect", null);
+      } else {
+        const auth = await bcrypt.compare(
+          userReqData.password,
+          res[0].password
+        );
+
+        if (auth) result(null, res[0]);
+        else result("password incorrect", null);
+      }
+    }
+  );
+};
+
 module.exports = User;

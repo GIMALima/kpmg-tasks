@@ -9,3 +9,13 @@ module.exports.signupErrors = (err) => {
 
   return errors;
 };
+
+module.exports.signinErrors = (err) => {
+  let errors = { email: "", password: "" };
+
+  if (err.includes("email")) errors.email = "Unkown email";
+
+  if (err.includes("password")) errors.password = "Incorrect password";
+
+  return errors;
+};
