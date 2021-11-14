@@ -68,4 +68,15 @@ User.login = async (userReqData, result) => {
   );
 };
 
+User.findUserById = (id, result) => {
+  con.query("SELECT * FROM user WHERE id=?", id, (err, res) => {
+    if (err) {
+      console.log("Error while fetching user by id", err);
+      result(null, err.message);
+    } else {
+      result(null, res[0]);
+    }
+  });
+};
+
 module.exports = User;

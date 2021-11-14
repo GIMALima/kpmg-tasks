@@ -1,8 +1,6 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
 const { signupErrors, signinErrors } = require("../utils/errors.utils");
-dotenv.config();
 
 const maxAge = 3 * 24 * 60 * 60 * 1000;
 
