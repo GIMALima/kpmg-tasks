@@ -99,4 +99,19 @@ Task.uploadSolutionTask = (id, file, result) => {
   );
 };
 
+Task.updateTasktState = (id, newState, result) => {
+  con.query(
+    "UPDATE task SET state=?,updated_at=? WHERE id = ?",
+    [newState, new Date(), id],
+    (err, res) => {
+      if (err) {
+        console.log(`Error while updating task state: ${err}`);
+        result(err.message, null);
+      } else {
+        Task.getTaskById(id, result);
+      }
+    }
+  );
+};
+
 module.exports = Task;

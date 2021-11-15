@@ -15,7 +15,10 @@ router.put("/:id", taskController.updateTask);
 // Endpoint to delete task.
 router.delete("/:id", taskController.deleteTask);
 
-// Enpoint to upload task solution zip file.
+// Endpoint to upload task solution zip file.
 router.put("/upload/:id", upload.single("file"), taskController.uploadSolution);
+
+// Endpoint to change task state.
+router.put("/state/:id", taskController.updateTaskState);
 
 module.exports = router;

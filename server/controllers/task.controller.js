@@ -68,3 +68,12 @@ module.exports.uploadSolution = async (req, res) => {
     });
   }
 };
+
+module.exports.updateTaskState = (req, res) => {
+  Task.updateTasktState(req.params.id, req.body.state, (err, task) => {
+    if (err) {
+      console.log("Update task state error : " + err);
+      res.status(200).send(err);
+    } else res.status(200).json(task);
+  });
+};
