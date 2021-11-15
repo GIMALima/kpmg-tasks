@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config({ path: "./.env" });
 const userRoutes = require("./routes/user.routes");
 const taskRoutes = require("./routes/task.routes");
+const noteRoutes = require("./routes/note.routes");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 
 // Create express app.
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 // Routes.
 app.use("/api/user/", userRoutes);
 app.use("/api/task/", taskRoutes);
+app.use("/api/note/", noteRoutes);
 
 // Setup the server port.
 const PORT = process.env.PORT || 5000;
