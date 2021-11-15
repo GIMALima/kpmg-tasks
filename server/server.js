@@ -1,6 +1,7 @@
 const express = require("express");
 require("dotenv").config({ path: "./.env" });
 const userRoutes = require("./routes/user.routes");
+const taskRoutes = require("./routes/task.routes");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 
 // Create express app.
@@ -11,7 +12,7 @@ app.use(express.json({ limit: "30mb", extended: true })); // Parse request data 
 app.use(express.urlencoded({ limit: "30mb", extended: true })); // Parse request data content type application/x-www-form-urlencoded.
 
 // Json Web Token.
-app.get("*", checkUser);
+//app.get("*", checkUser);
 app.get("/jwtid", requireAuth, (req, res) => {
   res.status(200).send(res.locals.user.id);
 });
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 
 // Routes.
 app.use("/api/user/", userRoutes);
+app.use("/api/task/", taskRoutes);
 
 // Setup the server port.
 const PORT = process.env.PORT || 5000;
