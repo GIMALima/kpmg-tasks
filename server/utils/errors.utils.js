@@ -19,3 +19,12 @@ module.exports.signinErrors = (err) => {
 
   return errors;
 };
+
+module.exports.uploadErrors = (err) => {
+  let errors = { format: "" };
+
+  if (err.message.includes("invalid file"))
+    errors.format = "Invalid file format.";
+
+  return errors;
+};

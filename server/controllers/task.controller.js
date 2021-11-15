@@ -1,4 +1,8 @@
 const Task = require("../models/task.model");
+const { uploadErrors } = require("../utils/errors.utils");
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
 
 module.exports.readTask = (req, res) => {
   Task.readTask((err, task) => {
@@ -36,4 +40,31 @@ module.exports.deleteTask = (req, res) => {
       res.status(200).send(err);
     } else res.status(200).json(task);
   });
+};
+
+module.exports.uploadSolution = async (req, res) => {
+  if (req.file !== null) {
+    try {
+      if (req.file.detectedMimeType != "application/zip")
+        throw Error("invalid file");
+    } catch (err) {
+      const errors = uploadErrors(err);
+      return res.status(200).json({ errors });
+    }
+
+    const filename = req.params.id + Date.now() + ".zip";
+    await pipeline(
+      req.file.stream,
+      fs.createWriteStream(
+        `${__dirname}/../../client/public/uploads/solutions/${filename}`
+      )
+    );
+
+    Task.uploadSolutionTask(req.params.id, filename, (err, task) => {
+      if (err) {
+        console.log("Upload error : " + err);
+        res.status(200).send(err);
+      } else res.status(200).json(task);
+    });
+  }
 };

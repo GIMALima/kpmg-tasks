@@ -83,4 +83,20 @@ Task.deleteTask = (id, result) => {
   });
 };
 
+// Upload task solution.
+Task.uploadSolutionTask = (id, file, result) => {
+  con.query(
+    "UPDATE task SET solution_file=?,updated_at=? WHERE id = ?",
+    [file, new Date(), id],
+    (err, res) => {
+      if (err) {
+        console.log(`Error while uploading task solution: ${err}`);
+        result(err.message, null);
+      } else {
+        Task.getTaskById(id, result);
+      }
+    }
+  );
+};
+
 module.exports = Task;
