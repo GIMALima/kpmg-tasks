@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  height: 100%;
+  cursor: default;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #2a2e34;
+}
+
+*,
+::after,
+::before {
+  box-sizing: inherit;
+}
+
+a {
+  text-decoration: none !important;
+}

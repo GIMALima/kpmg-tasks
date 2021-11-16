@@ -1,0 +1,47 @@
+.error {
+  color: red;
+}
+
+.css-binzgt {
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.css-nzinn5-MuiContainer-root {
+  margin-left: 30px !important;
+  margin-right: 30px !important;
+}
+
+.css-i4zi72-MuiButtonBase-root-MuiButton-root {
+  background-color: #0693e3 !important;
+}
+
+.css-mhc70k-MuiGrid-root > .MuiGrid-item {
+  padding-top: 25px !important;
+}
+
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input,
+.css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+  height: 1.8em !important;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  top: -10px !important;
+}
+
+.css-1pysi21-MuiFormLabel-root-MuiInputLabel-root {
+  font-size: 0.9rem !important;
+}
+
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+  color: #0693e3 !important;
+}
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #0693e3 !important;
+}
+
+.css-1gcg9uy-MuiPaper-root-MuiCard-root {
+  box-shadow: 0 25px 75px rgba(16, 30, 54, 0.25) !important;
+}

@@ -1,0 +1,20 @@
+.login {
+  overflow-y: auto;
+  background: url(../../images/background.png) bottom/cover no-repeat;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.login__mainContainer {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 10%;
+}
+
+.login__footer {
+  padding-bottom: 20px;
+}
