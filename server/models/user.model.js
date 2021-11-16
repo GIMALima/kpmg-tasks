@@ -7,9 +7,9 @@ var User = function (user) {
   this.lastname = user.lastname;
   this.email = user.email;
   this.password = user.password;
-  this.profile_type = user.profile_type;
-  this.creation_date = user.creation_date;
-  this.updated_at = user.updated_at;
+  this.profile = user.profile;
+  this.creation_date = new Date();
+  this.updated_at = new Date();
 };
 
 // Create a new user.

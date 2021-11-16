@@ -10,9 +10,16 @@ module.exports.checkUser = (req, res, next) => {
         res.cookie("jwt", "", { maxAge: 1 });
         next();
       } else {
-        let user = User.findUserById(decodedToken.id);
-        res.locals.user = user;
-        next();
+        User.findUserById(decodedToken.id, (err, user) => {
+          if (err) {
+            res.locals.user = null;
+            res.cookie("jwt", "", { maxAge: 1 });
+            next();
+          } else {
+            res.locals.user = user;
+            next();
+          }
+        });
       }
     });
   } else {
@@ -26,8 +33,7 @@ module.exports.requireAuth = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.TOKEN_SECRET, (err, decodedToken) => {
       if (err) {
-        console.log(err);
-        res.send(200).json("no token");
+        res.status(200).json("no token");
       } else {
         console.log(decodedToken.id);
         next();

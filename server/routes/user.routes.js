@@ -10,4 +10,7 @@ router.post("/signin", userController.signin);
 // Endpoint for user logout.
 router.get("/logout", userController.logout);
 
+// Endpoint to get user.
+router.get("/:id", userController.fetchUser);
+
 module.exports = router;

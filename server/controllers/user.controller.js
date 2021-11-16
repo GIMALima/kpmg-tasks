@@ -40,3 +40,13 @@ module.exports.logout = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 };
+
+module.exports.fetchUser = (req, res) => {
+  User.findUserById(req.params.id, (err, user) => {
+    if (err) {
+      res.status(400).send("User not found: " + err);
+    } else {
+      res.status(200).send(user);
+    }
+  });
+};
