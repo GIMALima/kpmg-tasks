@@ -3,8 +3,8 @@ const taskController = require("../controllers/task.controller");
 const multer = require("multer");
 const upload = multer();
 
-// Endpoint to fetch all tasks.
-router.get("/", taskController.readTask);
+// Endpoint to fetch all user tasks.
+router.get("/:id", taskController.readTask);
 
 // Endpoint for task creation.
 router.post("/", taskController.createTask);

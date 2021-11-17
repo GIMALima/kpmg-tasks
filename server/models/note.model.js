@@ -3,24 +3,21 @@ var con = require("../config/db.config");
 // Note entity.
 var Note = function (note) {
   this.text = note.text;
-  this.creator_id = note.creator_id;
-  this.task_id = note.task_id;
+  this.creator = note.creator;
+  this.task = note.task;
 };
 
 // Fetch a task notes.
 Note.readNote = (taskId, result) => {
-  con.query(
-    "SELECT * FROM note WHERE task_id = '" + taskId + "'",
-    (err, res) => {
-      if (err) {
-        console.log("Error while fetching task notes", err);
-        result(null, err);
-      } else {
-        console.log("Task notes fetched successfully");
-        result(null, res);
-      }
+  con.query("SELECT * FROM note WHERE task = '" + taskId + "'", (err, res) => {
+    if (err) {
+      console.log("Error while fetching task notes", err);
+      result(null, err);
+    } else {
+      console.log("Task notes fetched successfully");
+      result(null, res);
     }
-  );
+  });
 };
 
 // Fetch note by id.
@@ -49,7 +46,7 @@ Note.createNote = (noteReqData, result) => {
 // Update a note.
 Note.updateNote = (id, text, result) => {
   con.query(
-    "UPDATE note SET text=?,updated_at=? WHERE id = ?",
+    "UPDATE note SET text=?,updated_at=? id = ?",
     [text, new Date(), id],
     (err, res) => {
       if (err) {

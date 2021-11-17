@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import { UidContext } from "./AppContext";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
+import { getTasks } from "./actions/task.actions";
 import axios from "axios";
 
 const App = () => {
@@ -24,7 +25,10 @@ const App = () => {
     };
     fetchToken();
 
-    if (uid) dispatch(getUser(uid));
+    if (uid) {
+      dispatch(getUser(uid));
+      dispatch(getTasks(uid));
+    }
   }, [uid, dispatch]);
 
   return (

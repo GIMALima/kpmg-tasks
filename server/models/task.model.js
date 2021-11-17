@@ -5,17 +5,17 @@ var Task = function (task) {
   this.title = task.title;
   this.description = task.description;
   this.deadline = task.deadline;
-  this.creator_id = task.creator_id;
-  this.assign_id = task.assign_id;
+  this.creator = task.creator;
+  this.assignee = task.assignee;
   this.state = task.state;
-  this.created_at = task.created_at;
-  this.updated_at = task.updated_at;
-  this.solution_file = task.solution_file;
+  this.solution = task.solution;
+  this.created_at = new Date();
+  this.updated_at = new Date();
 };
 
-// Fetch all tasks.
-Task.readTask = (result) => {
-  con.query("SELECT * FROM task", (err, res) => {
+// Fetch all user tasks.
+Task.readTask = (id, result) => {
+  con.query("SELECT * FROM task WHERE creator=?", [id], (err, res) => {
     if (err) {
       console.log("Error while fetching tasks", err);
       result(null, err);

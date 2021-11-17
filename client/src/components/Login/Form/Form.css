@@ -21,6 +21,7 @@
 }
 
 .css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input,
+.css-19qh8xo-MuiInputBase-input-MuiOutlinedInput-input,
 .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
   height: 1.8em !important;
 }
@@ -33,7 +34,8 @@
   font-size: 0.9rem !important;
 }
 
-.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
   color: #0693e3 !important;
 }
 

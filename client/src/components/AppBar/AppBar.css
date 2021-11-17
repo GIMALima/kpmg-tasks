@@ -1,0 +1,22 @@
+.css-n7rtur-MuiPaper-root-MuiAppBar-root,
+.css-o5srbh-MuiPaper-root-MuiAppBar-root {
+  background-color: #fff !important;
+}
+
+.css-n7rtur-MuiPaper-root-MuiAppBar-root {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2) !important;
+  clip-path: inset(0px 0px -15px 0px);
+}
+
+.css-i4bv87-MuiSvgIcon-root {
+  color: #000 !important;
+}
+
+.css-jcn4dz-MuiBadge-badge,
+.css-sghohy-MuiButtonBase-root-MuiButton-root {
+  background-color: #0693e3 !important;
+}
+
+.css-1d6wzja-MuiButton-startIcon > :nth-of-type(1) {
+  color: #fff !important;
+}

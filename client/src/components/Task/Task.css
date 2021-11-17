@@ -1,0 +1,19 @@
+.task__icon {
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-size: 15px !important;
+  margin-right: 5px;
+}
+
+.css-1012ceb-MuiAvatar-root {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.css-3ogxn6-MuiButtonBase-root-MuiIconButton-root,
+.css-1eomvmf-MuiButtonBase-root-MuiIconButton-root {
+  padding: 0px !important;
+}
+
+.css-3ogxn6-MuiButtonBase-root-MuiIconButton-root {
+  float: right !important;
+}

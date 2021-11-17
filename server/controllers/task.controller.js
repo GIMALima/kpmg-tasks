@@ -5,7 +5,7 @@ const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 
 module.exports.readTask = (req, res) => {
-  Task.readTask((err, task) => {
+  Task.readTask(req.params.id, (err, task) => {
     if (err) {
       res.status(400).send(err);
     } else res.status(200).send(task);
