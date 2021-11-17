@@ -17,8 +17,15 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTask } from "../../actions/task.actions";
+import {
+  NEW_STATE,
+  REQUEST_STATE,
+  PROGRESS_STATE,
+  REVIEW_STATE,
+  COMPLETED_STATE,
+} from "../../Constants";
 import TaskForm from "../Task/Form/Form";
 import "./Task.css";
 
@@ -36,6 +43,7 @@ const ExpandMore = styled((props) => {
 export default function Task({ task }) {
   const [expanded, setExpanded] = React.useState(false);
   const [popup, setPopup] = useState(false);
+  const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
   const handleExpandClick = () => {
@@ -46,6 +54,18 @@ export default function Task({ task }) {
 
   const handleEditTask = () => setPopup(true);
 
+  const buttonColor = () => {
+    return task.state === NEW_STATE
+      ? "#8EE1EA"
+      : task.state === PROGRESS_STATE
+      ? "#C55494"
+      : task.state === REVIEW_STATE
+      ? "#D8C923"
+      : task.state === COMPLETED_STATE
+      ? "#0693e3"
+      : "#8EE1EA";
+  };
+
   return (
     <Card sx={{ maxWidth: "100%", marginTop: "15px" }}>
       <CardHeader
@@ -55,14 +75,17 @@ export default function Task({ task }) {
           </Avatar>
         }
         action={
-          <>
-            <IconButton aria-label="edit" onClick={handleEditTask}>
-              <EditIcon />
-            </IconButton>
-            <IconButton aria-label="delete" onClick={handleDeleteTask}>
-              <DeleteIcon />
-            </IconButton>
-          </>
+          userData.profile === "FR" &&
+          task.state === NEW_STATE && (
+            <>
+              <IconButton aria-label="edit" onClick={handleEditTask}>
+                <EditIcon />
+              </IconButton>
+              <IconButton aria-label="delete" onClick={handleDeleteTask}>
+                <DeleteIcon />
+              </IconButton>
+            </>
+          )
         }
         title={task.title}
         subheader={
@@ -101,15 +124,53 @@ export default function Task({ task }) {
         <IconButton aria-label="Add note">
           <ChatBubbleOutlineIcon />
         </IconButton>
-        <IconButton aria-label="Upload solution">
-          <FileUploadIcon />
-        </IconButton>
-        <IconButton aria-label="Download solution">
-          <FileDownloadIcon />
-        </IconButton>
-        <Button variant="contained" style={{ marginLeft: "auto" }}>
-          Send
-        </Button>
+        {userData.profile === "DZ" && (
+          <IconButton aria-label="Upload solution">
+            <FileUploadIcon />
+          </IconButton>
+        )}
+        {userData.profile === "FR" && task.solution && (
+          <IconButton aria-label="Download solution">
+            <FileDownloadIcon />
+          </IconButton>
+        )}
+        {userData.profile === "FR" && task.state === NEW_STATE && (
+          <Button
+            variant="contained"
+            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+          >
+            Send Request
+          </Button>
+        )}
+        {userData.profile === "FR" && task.state === REQUEST_STATE && (
+          <Button variant="contained" style={{ marginLeft: "auto" }} disabled>
+            Request sent
+          </Button>
+        )}
+        {userData.profile === "DZ" && task.state === REQUEST_STATE && (
+          <Button
+            variant="contained"
+            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+          >
+            Assign
+          </Button>
+        )}
+        {userData.profile === "DZ" && task.state === PROGRESS_STATE && (
+          <Button
+            variant="contained"
+            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+          >
+            Send solution
+          </Button>
+        )}
+        {userData.profile === "FR" && task.state === REVIEW_STATE && (
+          <Button
+            variant="contained"
+            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+          >
+            Approve
+          </Button>
+        )}
       </CardActions>
       <TaskForm popup={popup} setPopup={setPopup} task={task} edit={true} />
     </Card>

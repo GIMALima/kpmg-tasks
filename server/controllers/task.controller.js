@@ -4,6 +4,14 @@ const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
 
+module.exports.readAllTask = (req, res) => {
+  Task.readAllTask((err, task) => {
+    if (err) {
+      res.status(400).send(err);
+    } else res.status(200).send(task);
+  });
+};
+
 module.exports.readTask = (req, res) => {
   Task.readTask(req.params.id, (err, task) => {
     if (err) {
@@ -68,7 +76,7 @@ module.exports.uploadSolution = async (req, res) => {
 };
 
 module.exports.updateTaskState = (req, res) => {
-  Task.updateTasktState(req.params.id, req.body.state, (err, task) => {
+  Task.updateTaskState(req.params.id, req.body.state, (err, task) => {
     if (err) {
       console.log("Update task state error : " + err);
       res.status(200).send(err);

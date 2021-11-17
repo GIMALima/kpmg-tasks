@@ -80,7 +80,7 @@ const Signin = () => {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "#0693e3" }}>
-              <LockOutlinedIcon />
+              <LockOutlinedIcon style={{ color: "#fff" }} />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in

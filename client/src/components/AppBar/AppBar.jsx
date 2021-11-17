@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -34,6 +35,7 @@ const StyledAppBar = styled(MuiAppBar, {
 
 const AppBar = ({ open, toggleDrawer }) => {
   const [popup, setPopup] = useState(false);
+  const userData = useSelector((state) => state.userReducer);
 
   const handleClickOpen = () => {
     setPopup(true);
@@ -56,7 +58,7 @@ const AppBar = ({ open, toggleDrawer }) => {
             ...(open && { display: "none" }),
           }}
         >
-          <MenuIcon />
+          <MenuIcon className="icon" />
         </IconButton>
         <Typography
           component="h1"
@@ -67,16 +69,19 @@ const AppBar = ({ open, toggleDrawer }) => {
         >
           Dashboard
         </Typography>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={handleClickOpen}
-        >
-          New Task
-        </Button>
+        {userData.profile === "FR" && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon className="icon" />}
+            onClick={handleClickOpen}
+            className="button"
+          >
+            New Task
+          </Button>
+        )}
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon />
+            <NotificationsIcon className="icon" />
           </Badge>
         </IconButton>
       </Toolbar>

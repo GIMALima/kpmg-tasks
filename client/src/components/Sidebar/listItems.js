@@ -11,6 +11,7 @@ import List from "@mui/material/List";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import cookie from "js-cookie";
 
@@ -41,12 +42,14 @@ const MainListItems = () => {
 
   return (
     <div>
-      <ListItem button>
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <ListItemText primary="Home" />
-      </ListItem>
+      <NavLink exact to="/">
+        <ListItem button>
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
+      </NavLink>
       <ListItem button>
         <ListItemIcon>
           <NotificationsIcon />

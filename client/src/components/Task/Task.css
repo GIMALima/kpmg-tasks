@@ -18,3 +18,7 @@
 .css-1eomvmf-MuiButtonBase-root-MuiIconButton-root {
   float: right !important;
 }
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled {
+  background-color: transparent !important;
+}

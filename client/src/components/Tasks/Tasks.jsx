@@ -6,8 +6,15 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
-import "./Tasks.css";
 import Task from "../Task/Task";
+import "./Tasks.css";
+import {
+  COMPLETED_STATE,
+  NEW_STATE,
+  REQUEST_STATE,
+  PROGRESS_STATE,
+  REVIEW_STATE,
+} from "../../Constants";
 
 const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -15,6 +22,32 @@ const Demo = styled("div")(({ theme }) => ({
 
 export default function Tasks() {
   const tasks = useSelector((state) => state.taskReducer);
+  const newRequests = useSelector((state) => state.tasksReducer);
+  const userData = useSelector((state) => state.userReducer);
+
+  let requests = null;
+  let progress = null;
+  let review = null;
+  let completed = null;
+
+  if (Array.isArray(tasks)) {
+    requests =
+      userData.profile === "FR"
+        ? tasks.filter(
+            (task) => task.state === NEW_STATE || task.state === REQUEST_STATE
+          )
+        : newRequests;
+
+    progress =
+      Array.isArray(tasks) &&
+      tasks.filter((task) => task.state === PROGRESS_STATE);
+    review =
+      Array.isArray(tasks) &&
+      tasks.filter((task) => task.state === REVIEW_STATE);
+    completed =
+      Array.isArray(tasks) &&
+      tasks.filter((task) => task.state === COMPLETED_STATE);
+  }
 
   return (
     <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
@@ -32,8 +65,8 @@ export default function Tasks() {
                   New Tasks <span className="tasks__count">7</span>
                 </ListItemText>
               </ListItem>
-              {Array.isArray(tasks) &&
-                tasks.map((task) => <Task key={task.id} task={task} />)}
+              {requests &&
+                requests.map((task) => <Task key={task.id} task={task} />)}
             </List>
           </Demo>
         </Grid>
@@ -50,6 +83,8 @@ export default function Tasks() {
                   In progress <span className="tasks__count">3</span>
                 </ListItemText>
               </ListItem>
+              {progress &&
+                progress.map((task) => <Task key={task.id} task={task} />)}
             </List>
           </Demo>
         </Grid>
@@ -66,6 +101,8 @@ export default function Tasks() {
                   To review <span className="tasks__count">2</span>
                 </ListItemText>
               </ListItem>
+              {review &&
+                review.map((task) => <Task key={task.id} task={task} />)}
             </List>
           </Demo>
         </Grid>
@@ -82,6 +119,8 @@ export default function Tasks() {
                   Completed <span className="tasks__count">2</span>
                 </ListItemText>
               </ListItem>
+              {completed &&
+                completed.map((task) => <Task key={task.id} task={task} />)}
             </List>
           </Demo>
         </Grid>

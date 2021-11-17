@@ -8,15 +8,18 @@
   clip-path: inset(0px 0px -15px 0px);
 }
 
-.css-i4bv87-MuiSvgIcon-root {
+.icon {
   color: #000 !important;
 }
 
-.css-jcn4dz-MuiBadge-badge,
-.css-sghohy-MuiButtonBase-root-MuiButton-root {
+.css-jcn4dz-MuiBadge-badge {
   background-color: #0693e3 !important;
 }
 
 .css-1d6wzja-MuiButton-startIcon > :nth-of-type(1) {
   color: #fff !important;
+}
+
+.button {
+  background-color: #0693e3 !important;
 }

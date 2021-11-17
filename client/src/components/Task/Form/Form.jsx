@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import { Box, TextField, Grid } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { addTask, getTasks, updateTask } from "../../../actions/task.actions";
+import { NEW_STATE } from "../../../Constants";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -89,7 +90,7 @@ export default function TaskForm({ popup, setPopup, task, edit }) {
   const handleTask = async (taskData) => {
     taskData.deadline = deadline;
     taskData.creator = userData.id;
-    taskData.state = "new";
+    taskData.state = NEW_STATE;
 
     await dispatch(!edit ? addTask(taskData) : updateTask(task.id, taskData));
     dispatch(getTasks(userData.id));

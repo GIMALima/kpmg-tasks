@@ -13,9 +13,9 @@ var Task = function (task) {
   this.updated_at = new Date();
 };
 
-// Fetch all user tasks.
-Task.readTask = (id, result) => {
-  con.query("SELECT * FROM task WHERE creator=?", [id], (err, res) => {
+// Fetch all new request.
+Task.readAllTask = (result) => {
+  con.query("SELECT * FROM task WHERE state='request'", (err, res) => {
     if (err) {
       console.log("Error while fetching tasks", err);
       result(null, err);
@@ -24,6 +24,23 @@ Task.readTask = (id, result) => {
       result(null, res);
     }
   });
+};
+
+// Fetch a user tasks by state.
+Task.readTask = (id, result) => {
+  con.query(
+    "SELECT * FROM task WHERE creator=? OR assignee=?",
+    [id, id],
+    (err, res) => {
+      if (err) {
+        console.log("Error while fetching tasks", err);
+        result(null, err);
+      } else {
+        console.log("Tasks fetched successfully");
+        result(null, res);
+      }
+    }
+  );
 };
 
 // Fetch task by id.
@@ -99,7 +116,7 @@ Task.uploadSolutionTask = (id, file, result) => {
   );
 };
 
-Task.updateTasktState = (id, newState, result) => {
+Task.updateTaskState = (id, newState, result) => {
   con.query(
     "UPDATE task SET state=?,updated_at=? WHERE id = ?",
     [newState, new Date(), id],
