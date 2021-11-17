@@ -3,6 +3,7 @@ import axios from "axios";
 // Tasks.
 export const GET_TASKS = "GET_TASKS";
 export const ADD_TASK = "ADD_TASK";
+export const DELETE_TASK = "DELETE_TASK";
 
 // Errors.
 export const GET_TASK_ERRORS = "GET_TASK_ERRORS";
@@ -29,5 +30,18 @@ export const addTask = (data) => {
           dispatch({ type: GET_TASK_ERRORS, payload: "" });
         }
       });
+  };
+};
+
+export const deleteTask = (taskId) => {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_URL}api/task/${taskId}`,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_TASK, payload: { taskId } });
+      })
+      .catch((err) => console.log(err));
   };
 };

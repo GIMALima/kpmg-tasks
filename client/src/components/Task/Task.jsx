@@ -17,6 +17,8 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import { useDispatch } from "react-redux";
+import { deleteTask } from "../../actions/task.actions";
 import "./Task.css";
 
 const ExpandMore = styled((props) => {
@@ -32,9 +34,14 @@ const ExpandMore = styled((props) => {
 
 export default function Task({ task }) {
   const [expanded, setExpanded] = React.useState(false);
+  const dispatch = useDispatch();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleDeleteTask = () => {
+    dispatch(deleteTask(task.id));
   };
 
   return (
@@ -50,7 +57,7 @@ export default function Task({ task }) {
             <IconButton aria-label="edit">
               <EditIcon />
             </IconButton>
-            <IconButton aria-label="delete">
+            <IconButton aria-label="delete" onClick={handleDeleteTask}>
               <DeleteIcon />
             </IconButton>
           </>
