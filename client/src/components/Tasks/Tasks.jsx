@@ -62,7 +62,10 @@ export default function Tasks() {
             >
               <ListItem>
                 <ListItemText>
-                  New Tasks <span className="tasks__count">7</span>
+                  New Tasks{" "}
+                  <span className="tasks__count">
+                    {requests && requests.length}
+                  </span>
                 </ListItemText>
               </ListItem>
               {requests &&
@@ -80,7 +83,10 @@ export default function Tasks() {
             >
               <ListItem>
                 <ListItemText>
-                  In progress <span className="tasks__count">3</span>
+                  In progress{" "}
+                  <span className="tasks__count">
+                    {progress && progress.length}
+                  </span>
                 </ListItemText>
               </ListItem>
               {progress &&
@@ -98,7 +104,10 @@ export default function Tasks() {
             >
               <ListItem>
                 <ListItemText>
-                  To review <span className="tasks__count">2</span>
+                  To review{" "}
+                  <span className="tasks__count">
+                    {review && review.length}
+                  </span>
                 </ListItemText>
               </ListItem>
               {review &&
@@ -116,7 +125,10 @@ export default function Tasks() {
             >
               <ListItem>
                 <ListItemText>
-                  Completed <span className="tasks__count">2</span>
+                  Completed{" "}
+                  <span className="tasks__count">
+                    {completed && completed.length}
+                  </span>
                 </ListItemText>
               </ListItem>
               {completed &&

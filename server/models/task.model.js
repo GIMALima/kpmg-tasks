@@ -88,6 +88,22 @@ Task.updateTask = (id, taskReqData, result) => {
   );
 };
 
+// Assign a task.
+Task.assignTask = (id, userId, state, result) => {
+  con.query(
+    "UPDATE task SET assignee=?,state=?,updated_at=? WHERE id = ?",
+    [userId, state, new Date(), id],
+    (err, res) => {
+      if (err) {
+        console.log(`Error while updating task data: ${err}`);
+        result(err.message, null);
+      } else {
+        Task.getTaskById(id, result);
+      }
+    }
+  );
+};
+
 // Delete a task.
 Task.deleteTask = (id, result) => {
   con.query("DELETE FROM task WHERE id=?", [id], (err, res) => {

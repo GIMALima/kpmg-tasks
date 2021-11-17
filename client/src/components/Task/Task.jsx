@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -18,7 +18,12 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask } from "../../actions/task.actions";
+import axios from "axios";
+import {
+  deleteTask,
+  updateTaskState,
+  assignTask,
+} from "../../actions/task.actions";
 import {
   NEW_STATE,
   REQUEST_STATE,
@@ -43,18 +48,43 @@ const ExpandMore = styled((props) => {
 export default function Task({ task }) {
   const [expanded, setExpanded] = React.useState(false);
   const [popup, setPopup] = useState(false);
-  const userData = useSelector((state) => state.userReducer);
+  const [taskUser, setTaskUser] = useState(null);
+  const currentUser = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+  const handleExpandClick = () => setExpanded(!expanded);
 
   const handleDeleteTask = () => dispatch(deleteTask(task.id));
 
   const handleEditTask = () => setPopup(true);
 
-  const buttonColor = () => {
+  const handleSendRequest = () =>
+    dispatch(updateTaskState(task.id, REQUEST_STATE));
+
+  const handleAssignTask = () =>
+    dispatch(assignTask(task.id, currentUser.id, PROGRESS_STATE));
+
+  const handleApproveTask = () =>
+    dispatch(updateTaskState(task.id, COMPLETED_STATE));
+
+  useEffect(() => {
+    const fetchUser = async (userId) => {
+      await axios({
+        method: "get",
+        url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
+        withCredentials: true,
+      })
+        .then((res) => {
+          setTaskUser(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
+    currentUser.profile === "DZ" && fetchUser(task.creator);
+    currentUser.profile === "FR" && task.assignee && fetchUser(task.assignee);
+  }, [dispatch]);
+
+  const getColor = () => {
     return task.state === NEW_STATE
       ? "#8EE1EA"
       : task.state === PROGRESS_STATE
@@ -75,7 +105,7 @@ export default function Task({ task }) {
           </Avatar>
         }
         action={
-          userData.profile === "FR" &&
+          currentUser.profile === "FR" &&
           task.state === NEW_STATE && (
             <>
               <IconButton aria-label="edit" onClick={handleEditTask}>
@@ -98,6 +128,16 @@ export default function Task({ task }) {
           </>
         }
       />
+
+      {taskUser && (
+        <Typography style={{ paddingLeft: "16px" }}>
+          {currentUser.profile === "DZ" ? "Creator: " : "Assignee: "}
+          <span style={{ color: getColor() }}>
+            @{taskUser.firstname + " " + taskUser.lastname}
+          </span>
+        </Typography>
+      )}
+
       <CardContent>
         <Typography
           style={{ textAlign: "justify" }}
@@ -124,49 +164,54 @@ export default function Task({ task }) {
         <IconButton aria-label="Add note">
           <ChatBubbleOutlineIcon />
         </IconButton>
-        {userData.profile === "DZ" && (
+        {currentUser.profile === "DZ" && (
           <IconButton aria-label="Upload solution">
             <FileUploadIcon />
           </IconButton>
         )}
-        {userData.profile === "FR" && task.solution && (
+        {currentUser.profile === "FR" && task.solution && (
           <IconButton aria-label="Download solution">
             <FileDownloadIcon />
           </IconButton>
         )}
-        {userData.profile === "FR" && task.state === NEW_STATE && (
+        {currentUser.profile === "FR" && task.state === NEW_STATE && (
           <Button
             variant="contained"
-            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+            style={{ marginLeft: "auto", backgroundColor: getColor() }}
+            onClick={handleSendRequest}
           >
             Send Request
           </Button>
         )}
-        {userData.profile === "FR" && task.state === REQUEST_STATE && (
+        {currentUser.profile === "FR" && task.state === REQUEST_STATE && (
           <Button variant="contained" style={{ marginLeft: "auto" }} disabled>
             Request sent
           </Button>
         )}
-        {userData.profile === "DZ" && task.state === REQUEST_STATE && (
+        {currentUser.profile === "DZ" && task.state === REQUEST_STATE && (
           <Button
             variant="contained"
-            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+            style={{ marginLeft: "auto", backgroundColor: getColor() }}
+            onClick={handleAssignTask}
           >
             Assign
           </Button>
         )}
-        {userData.profile === "DZ" && task.state === PROGRESS_STATE && (
+        {currentUser.profile === "DZ" &&
+          task.state === PROGRESS_STATE &&
+          task.solution && (
+            <Button
+              variant="contained"
+              style={{ marginLeft: "auto", backgroundColor: getColor() }}
+            >
+              Send solution
+            </Button>
+          )}
+        {currentUser.profile === "FR" && task.state === REVIEW_STATE && (
           <Button
+            onClick={handleApproveTask}
             variant="contained"
-            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
-          >
-            Send solution
-          </Button>
-        )}
-        {userData.profile === "FR" && task.state === REVIEW_STATE && (
-          <Button
-            variant="contained"
-            style={{ marginLeft: "auto", backgroundColor: buttonColor() }}
+            style={{ marginLeft: "auto", backgroundColor: getColor() }}
           >
             Approve
           </Button>

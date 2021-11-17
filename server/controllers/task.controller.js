@@ -39,6 +39,20 @@ module.exports.updateTask = (req, res) => {
   });
 };
 
+module.exports.assignTask = (req, res) => {
+  Task.assignTask(
+    req.params.id,
+    req.body.assignee,
+    req.body.state,
+    (err, task) => {
+      if (err) {
+        console.log("Update error : " + err);
+        res.status(200).send(err);
+      } else res.status(200).json(task);
+    }
+  );
+};
+
 module.exports.deleteTask = (req, res) => {
   Task.deleteTask(req.params.id, (err, task) => {
     if (err) {

@@ -1,4 +1,10 @@
-import { GET_TASKS, DELETE_TASK, UPDATE_TASK } from "../actions/task.actions";
+import {
+  GET_TASKS,
+  DELETE_TASK,
+  UPDATE_TASK,
+  UPDATE_TASK_STATE,
+  ASSIGN_TASK,
+} from "../actions/task.actions";
 
 const initialState = {};
 
@@ -22,6 +28,19 @@ export default function taskReducer(state = initialState, action) {
           };
         } else return task;
       });
+
+    case UPDATE_TASK_STATE:
+      return state.map((task) => {
+        if (task.id === action.payload.taskId) {
+          return {
+            ...task,
+            state: action.payload.state,
+          };
+        } else return task;
+      });
+
+    case ASSIGN_TASK:
+      return [...state, action.payload];
 
     default:
       return state;

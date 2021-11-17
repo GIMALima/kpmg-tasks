@@ -24,4 +24,7 @@ router.put("/upload/:id", upload.single("file"), taskController.uploadSolution);
 // Endpoint to change task state.
 router.put("/state/:id", taskController.updateTaskState);
 
+// Endpoint to assign task to a user.
+router.put("/assign/:id", taskController.assignTask);
+
 module.exports = router;
