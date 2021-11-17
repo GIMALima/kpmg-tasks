@@ -79,4 +79,15 @@ User.findUserById = (id, result) => {
   });
 };
 
+User.findUsers = (result) => {
+  con.query("SELECT * FROM user", (err, res) => {
+    if (err) {
+      console.log("Error while fetching user", err);
+      result(null, err.message);
+    } else {
+      result(null, res);
+    }
+  });
+};
+
 module.exports = User;

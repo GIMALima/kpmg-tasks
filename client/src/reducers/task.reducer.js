@@ -4,6 +4,7 @@ import {
   UPDATE_TASK,
   UPDATE_TASK_STATE,
   ASSIGN_TASK,
+  UPLOAD_SOLUTION,
 } from "../actions/task.actions";
 
 const initialState = {};
@@ -40,6 +41,7 @@ export default function taskReducer(state = initialState, action) {
       });
 
     case ASSIGN_TASK:
+    case UPLOAD_SOLUTION:
       return [...state, action.payload];
 
     default:

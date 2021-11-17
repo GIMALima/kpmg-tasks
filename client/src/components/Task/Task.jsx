@@ -15,10 +15,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import UploadSolution from "../UploadSolution/UploadSolution";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import {
   deleteTask,
   updateTaskState,
@@ -50,6 +49,7 @@ export default function Task({ task }) {
   const [popup, setPopup] = useState(false);
   const [taskUser, setTaskUser] = useState(null);
   const currentUser = useSelector((state) => state.userReducer);
+  const users = useSelector((state) => state.usersReducer);
   const dispatch = useDispatch();
 
   const handleExpandClick = () => setExpanded(!expanded);
@@ -68,20 +68,17 @@ export default function Task({ task }) {
     dispatch(updateTaskState(task.id, COMPLETED_STATE));
 
   useEffect(() => {
-    const fetchUser = async (userId) => {
-      await axios({
-        method: "get",
-        url: `${process.env.REACT_APP_API_URL}api/user/${userId}`,
-        withCredentials: true,
-      })
-        .then((res) => {
-          setTaskUser(res.data);
-        })
-        .catch((err) => console.log(err));
-    };
+    const userId = currentUser.profile === "DZ" ? task.creator : task.assignee;
 
-    currentUser.profile === "DZ" && fetchUser(task.creator);
-    currentUser.profile === "FR" && task.assignee && fetchUser(task.assignee);
+    let u =
+      Array.isArray(users) &&
+      users.filter((user) => {
+        return user.id === userId;
+      })[0];
+
+    console.log(u);
+
+    setTaskUser(u);
   }, [dispatch]);
 
   const getColor = () => {
@@ -164,12 +161,10 @@ export default function Task({ task }) {
         <IconButton aria-label="Add note">
           <ChatBubbleOutlineIcon />
         </IconButton>
-        {currentUser.profile === "DZ" && (
-          <IconButton aria-label="Upload solution">
-            <FileUploadIcon />
-          </IconButton>
+        {currentUser.profile === "DZ" && !task.solution && (
+          <UploadSolution key={task.id} task={task} />
         )}
-        {currentUser.profile === "FR" && task.solution && (
+        {task.solution && (
           <IconButton aria-label="Download solution">
             <FileDownloadIcon />
           </IconButton>
@@ -197,16 +192,6 @@ export default function Task({ task }) {
             Assign
           </Button>
         )}
-        {currentUser.profile === "DZ" &&
-          task.state === PROGRESS_STATE &&
-          task.solution && (
-            <Button
-              variant="contained"
-              style={{ marginLeft: "auto", backgroundColor: getColor() }}
-            >
-              Send solution
-            </Button>
-          )}
         {currentUser.profile === "FR" && task.state === REVIEW_STATE && (
           <Button
             onClick={handleApproveTask}

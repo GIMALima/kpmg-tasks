@@ -8,6 +8,7 @@ export const DELETE_TASK = "DELETE_TASK";
 export const UPDATE_TASK = "UPDATE_TASK";
 export const UPDATE_TASK_STATE = "UPDATE_TASK_STATE";
 export const ASSIGN_TASK = "ASSIGN_TASK";
+export const UPLOAD_SOLUTION = "UPLOAD_SOLUTION";
 
 // Errors.
 export const GET_TASK_ERRORS = "GET_TASK_ERRORS";
@@ -98,6 +99,22 @@ export const assignTask = (taskId, userId, state) => {
     })
       .then((res) => {
         dispatch({ type: ASSIGN_TASK, payload: res.data });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const uploadSolution = (taskId, data) => {
+  return (dispatch) => {
+    return axios
+      .put(`${process.env.REACT_APP_API_URL}api/task/upload/${taskId}`, data)
+      .then((res) => {
+        if (res.data.errors) {
+          dispatch({ type: GET_TASK_ERRORS, payload: res.data.errors });
+        } else {
+          dispatch({ type: GET_TASK_ERRORS, payload: "" });
+          dispatch({ type: UPLOAD_SOLUTION, payload: res.data });
+        }
       })
       .catch((err) => console.log(err));
   };

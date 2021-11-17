@@ -8,6 +8,7 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
 import { getAllTasks } from "./actions/task.actions";
+import { getAllUsers } from "./actions/user.actions";
 
 const store = createStore(
   rootReducer,
@@ -15,6 +16,7 @@ const store = createStore(
 );
 
 store.dispatch(getAllTasks());
+store.dispatch(getAllUsers());
 
 ReactDOM.render(
   <Provider store={store}>

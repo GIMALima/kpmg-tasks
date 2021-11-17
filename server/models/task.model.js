@@ -119,7 +119,7 @@ Task.deleteTask = (id, result) => {
 // Upload task solution.
 Task.uploadSolutionTask = (id, file, result) => {
   con.query(
-    "UPDATE task SET solution_file=?,updated_at=? WHERE id = ?",
+    "UPDATE task SET solution=?,updated_at=? WHERE id = ?",
     [file, new Date(), id],
     (err, res) => {
       if (err) {

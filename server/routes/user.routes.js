@@ -13,4 +13,7 @@ router.get("/logout", userController.logout);
 // Endpoint to get user.
 router.get("/:id", userController.fetchUser);
 
+// Endpoint to get users.
+router.get("/", userController.fetchAllUsers);
+
 module.exports = router;

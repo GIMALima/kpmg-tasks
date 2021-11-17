@@ -50,3 +50,13 @@ module.exports.fetchUser = (req, res) => {
     }
   });
 };
+
+module.exports.fetchAllUsers = (req, res) => {
+  User.findUsers((err, users) => {
+    if (err) {
+      res.status(400).send("Users not found: " + err);
+    } else {
+      res.status(200).send(users);
+    }
+  });
+};

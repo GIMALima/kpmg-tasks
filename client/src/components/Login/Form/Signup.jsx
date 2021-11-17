@@ -230,6 +230,7 @@ const Signup = () => {
                 type="submit"
                 fullWidth
                 size="large"
+                className="button"
                 variant="contained"
                 sx={{ mt: 4, mb: 2 }}
               >
