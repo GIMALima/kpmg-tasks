@@ -15,7 +15,7 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import Typography from "@mui/material/Typography";
 import { Box, TextField, Grid } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { addTask, getTasks } from "../../../actions/task.actions";
+import { addTask, getTasks, updateTask } from "../../../actions/task.actions";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -55,29 +55,25 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function TaskForm({ popup, setPopup }) {
+export default function TaskForm({ popup, setPopup, task, edit }) {
   const {
     handleSubmit,
     register,
     watch,
-    reset,
     formState: { errors },
   } = useForm();
   watch("title");
   watch("description");
   watch("deadline");
 
-  const [deadline, setDeadline] = useState(new Date());
+  const [description, setDescription] = useState(edit ? task.description : "");
+  const [title, setTitle] = useState(edit ? task.title : "");
+  const [deadline, setDeadline] = useState(edit ? task.deadline : new Date());
   const userData = useSelector((state) => state.userReducer);
-  const error = useSelector((state) => state.errorReducer.taskError);
   const dispatch = useDispatch();
 
   const handleClose = () => {
     setPopup(false);
-  };
-
-  const handleChange = (deadline) => {
-    setDeadline(deadline);
   };
 
   const handleValidation = () => {
@@ -90,14 +86,22 @@ export default function TaskForm({ popup, setPopup }) {
       : "";
   };
 
-  const handleCreate = async (taskData) => {
+  const handleTask = async (taskData) => {
+    taskData.deadline = deadline;
     taskData.creator = userData.id;
     taskData.state = "new";
 
-    await dispatch(addTask(taskData));
+    await dispatch(!edit ? addTask(taskData) : updateTask(task.id, taskData));
     dispatch(getTasks(userData.id));
-    reset();
+
+    resestForm();
     handleClose();
+  };
+
+  const resestForm = () => {
+    setTitle("");
+    setDescription("");
+    setDeadline(new Date());
   };
 
   return (
@@ -111,12 +115,12 @@ export default function TaskForm({ popup, setPopup }) {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          Create new task
+          {!edit ? "Create new task" : "Edit task"}
         </BootstrapDialogTitle>
         <Box
           component="form"
           noValidate
-          onSubmit={handleSubmit(handleCreate)}
+          onSubmit={handleSubmit(handleTask)}
           sx={{ mt: 3 }}
         >
           <DialogContent dividers>
@@ -142,6 +146,8 @@ export default function TaskForm({ popup, setPopup }) {
                   fullWidth
                   name="title"
                   size="small"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={2}>
@@ -158,6 +164,8 @@ export default function TaskForm({ popup, setPopup }) {
                   minRows={10}
                   style={{ width: "100%" }}
                   name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} sm={2}>
@@ -169,16 +177,11 @@ export default function TaskForm({ popup, setPopup }) {
                     {...register("deadline", {
                       required: "You must enter a deadline",
                     })}
-                    inputFormat="MM/dd/yyyy"
+                    inputFormat="dd/MM/yyyy"
                     value={deadline}
-                    onChange={handleChange}
+                    onChange={(newDeadline) => setDeadline(newDeadline)}
                     renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        name="deadline"
-                        fullWidth
-                        size="small"
-                      />
+                      <TextField {...params} fullWidth size="small" />
                     )}
                   />
                 </LocalizationProvider>
@@ -189,14 +192,16 @@ export default function TaskForm({ popup, setPopup }) {
             <button
               type="submit"
               style={{
-                backgroundColor: "transparent",
-                color: "#0693e3",
+                backgroundColor: "#0693e3",
+                color: "#fff",
+                borderRadius: "5px",
                 border: "none",
-                fontSize: "16px",
-                textTransform: "uppercase",
+                fontSize: "14px",
+                padding: "8px 12px",
+                textTransform: "capitalize",
               }}
             >
-              Create
+              {!edit ? "Create" : "Update"}
             </button>
           </DialogActions>
         </Box>

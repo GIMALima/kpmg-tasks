@@ -23,9 +23,7 @@ module.exports.createTask = (req, res) => {
 };
 
 module.exports.updateTask = (req, res) => {
-  const taskData = new Task(req.body);
-
-  Task.updateTask(req.params.id, taskData, (err, task) => {
+  Task.updateTask(req.params.id, req.body.taskData, (err, task) => {
     if (err) {
       console.log("Update error : " + err);
       res.status(200).send(err);

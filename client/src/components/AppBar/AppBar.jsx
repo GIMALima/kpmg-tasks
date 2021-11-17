@@ -80,7 +80,7 @@ const AppBar = ({ open, toggleDrawer }) => {
           </Badge>
         </IconButton>
       </Toolbar>
-      <TaskForm popup={popup} setPopup={setPopup} />
+      <TaskForm popup={popup} setPopup={setPopup} edit={false} />
     </StyledAppBar>
   );
 };

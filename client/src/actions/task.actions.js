@@ -4,6 +4,7 @@ import axios from "axios";
 export const GET_TASKS = "GET_TASKS";
 export const ADD_TASK = "ADD_TASK";
 export const DELETE_TASK = "DELETE_TASK";
+export const UPDATE_TASK = "UPDATE_TASK";
 
 // Errors.
 export const GET_TASK_ERRORS = "GET_TASK_ERRORS";
@@ -41,6 +42,21 @@ export const deleteTask = (taskId) => {
     })
       .then((res) => {
         dispatch({ type: DELETE_TASK, payload: { taskId } });
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const updateTask = (taskId, taskData) => {
+  console.log(taskData);
+  return (dispatch) => {
+    return axios({
+      method: "put",
+      url: `${process.env.REACT_APP_API_URL}api/task/${taskId}`,
+      data: { taskData },
+    })
+      .then((res) => {
+        dispatch({ type: UPDATE_TASK, payload: { taskData, taskId } });
       })
       .catch((err) => console.log(err));
   };

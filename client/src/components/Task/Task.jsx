@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -19,6 +19,7 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { useDispatch } from "react-redux";
 import { deleteTask } from "../../actions/task.actions";
+import TaskForm from "../Task/Form/Form";
 import "./Task.css";
 
 const ExpandMore = styled((props) => {
@@ -34,15 +35,16 @@ const ExpandMore = styled((props) => {
 
 export default function Task({ task }) {
   const [expanded, setExpanded] = React.useState(false);
+  const [popup, setPopup] = useState(false);
   const dispatch = useDispatch();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  const handleDeleteTask = () => {
-    dispatch(deleteTask(task.id));
-  };
+  const handleDeleteTask = () => dispatch(deleteTask(task.id));
+
+  const handleEditTask = () => setPopup(true);
 
   return (
     <Card sx={{ maxWidth: "100%", marginTop: "15px" }}>
@@ -54,7 +56,7 @@ export default function Task({ task }) {
         }
         action={
           <>
-            <IconButton aria-label="edit">
+            <IconButton aria-label="edit" onClick={handleEditTask}>
               <EditIcon />
             </IconButton>
             <IconButton aria-label="delete" onClick={handleDeleteTask}>
@@ -66,12 +68,19 @@ export default function Task({ task }) {
         subheader={
           <>
             <CalendarTodayIcon className="task__icon" />
-            <span>{task.deadline}</span>
+            <span>
+              {typeof task.deadline === "string" &&
+                task.deadline.substring(0, 10)}
+            </span>
           </>
         }
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          style={{ textAlign: "justify" }}
+          paragraph
+          color="text.secondary"
+        >
           {!expanded && task.description.substring(0, 100)}
           <ExpandMore
             expand={expanded}
@@ -102,6 +111,7 @@ export default function Task({ task }) {
           Send
         </Button>
       </CardActions>
+      <TaskForm popup={popup} setPopup={setPopup} task={task} edit={true} />
     </Card>
   );
 }
