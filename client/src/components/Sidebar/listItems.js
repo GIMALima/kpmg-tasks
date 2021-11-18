@@ -14,13 +14,14 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import cookie from "js-cookie";
+import StateFilter from "../StateFilter/StateFilter";
 
-const MainListItems = () => {
-  const [open, setOpen] = useState(false);
+const MainListItems = ({ selectedState, setSelectedState }) => {
+  const [profile, setProfile] = useState(false);
+  const [filter, setFilter] = useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const handleOpenProfile = () => setProfile(!profile);
+  const handleOpenFilter = () => setFilter(!filter);
 
   const removeCookie = (key) => {
     if (window !== "undefined") {
@@ -56,20 +57,29 @@ const MainListItems = () => {
         </ListItemIcon>
         <ListItemText primary="Notifications" />
       </ListItem>
-      <ListItem button>
+      <ListItem button onClick={handleOpenFilter}>
         <ListItemIcon>
           <FilterAltIcon />
         </ListItemIcon>
         <ListItemText primary="Filter" />
+        {filter ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <ListItem button onClick={handleClick}>
+      <Collapse in={filter} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <StateFilter
+            selectedState={selectedState}
+            setSelectedState={setSelectedState}
+          />
+        </List>
+      </Collapse>
+      <ListItem button onClick={handleOpenProfile}>
         <ListItemIcon>
           <PersonIcon />
         </ListItemIcon>
         <ListItemText primary="Profile" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        {profile ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={profile} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button sx={{ pl: 4 }} onClick={handleLogout}>
             <ListItemIcon>

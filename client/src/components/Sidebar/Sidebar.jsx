@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
@@ -41,6 +41,8 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Sidebar = ({ setPopup, open, toggleDrawer }) => {
+  const [selectedState, setSelectedState] = useState("all");
+
   return (
     <>
       <Drawer variant="permanent" open={open}>
@@ -65,7 +67,10 @@ const Sidebar = ({ setPopup, open, toggleDrawer }) => {
         </Toolbar>
         <Divider />
         <List>
-          <MainListItems />
+          <MainListItems
+            selectedState={selectedState}
+            setSelectedState={setSelectedState}
+          />
         </List>
         <Divider />
       </Drawer>
@@ -82,7 +87,7 @@ const Sidebar = ({ setPopup, open, toggleDrawer }) => {
         }}
       >
         <Toolbar />
-        <Tasks setPopup={setPopup} />
+        <Tasks setPopup={setPopup} selectedState={selectedState} />
       </Box>
     </>
   );
