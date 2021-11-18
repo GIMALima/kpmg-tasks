@@ -33,8 +33,7 @@ const StyledAppBar = styled(MuiAppBar, {
   }),
 }));
 
-const AppBar = ({ open, toggleDrawer }) => {
-  const [popup, setPopup] = useState(false);
+const AppBar = ({ popup, setPopup, open, toggleDrawer }) => {
   const userData = useSelector((state) => state.userReducer);
 
   const handleClickOpen = () => {
@@ -58,7 +57,7 @@ const AppBar = ({ open, toggleDrawer }) => {
             ...(open && { display: "none" }),
           }}
         >
-          <MenuIcon className="icon" />
+          <MenuIcon style={{ color: "#000" }} />
         </IconButton>
         <Typography
           component="h1"
@@ -67,12 +66,12 @@ const AppBar = ({ open, toggleDrawer }) => {
           noWrap
           sx={{ flexGrow: 1 }}
         >
-          Dashboard
+          {userData.firstname} Dashboard
         </Typography>
         {userData.profile === "FR" && (
           <Button
             variant="contained"
-            startIcon={<AddIcon className="icon" />}
+            startIcon={<AddIcon style={{ color: "#fff" }} />}
             onClick={handleClickOpen}
             className="button"
           >
@@ -81,7 +80,7 @@ const AppBar = ({ open, toggleDrawer }) => {
         )}
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">
-            <NotificationsIcon className="icon" />
+            <NotificationsIcon style={{ color: "#000" }} />
           </Badge>
         </IconButton>
       </Toolbar>

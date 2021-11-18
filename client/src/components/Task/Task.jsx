@@ -13,6 +13,7 @@ import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
+import Tooltip from "@mui/material/Tooltip";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
@@ -32,6 +33,7 @@ import {
   COMPLETED_STATE,
 } from "../../Constants";
 import TaskForm from "../Task/Form/Form";
+import { saveAs } from "file-saver";
 import "./Task.css";
 
 const ExpandMore = styled((props) => {
@@ -102,6 +104,10 @@ export default function Task({ task }) {
       : "#8EE1EA";
   };
 
+  const downloadSolution = () => {
+    saveAs("./uploads/solutions/" + task.solution, task.solution);
+  };
+
   return (
     <Card sx={{ maxWidth: "100%", marginTop: "15px" }}>
       <CardHeader
@@ -118,23 +124,31 @@ export default function Task({ task }) {
           currentUser.profile === "FR" &&
           task.state === NEW_STATE && (
             <>
-              <IconButton aria-label="edit" onClick={handleEditTask}>
-                <EditIcon />
-              </IconButton>
-              <IconButton aria-label="delete" onClick={handleDeleteTask}>
-                <DeleteIcon />
-              </IconButton>
+              <Tooltip title="Edit task">
+                <IconButton aria-label="edit" onClick={handleEditTask}>
+                  <EditIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Delete task">
+                <IconButton aria-label="delete" onClick={handleDeleteTask}>
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
             </>
           )
         }
         title={task.title}
         subheader={
           <>
-            <CalendarTodayIcon className="task__icon" />
-            <span>
-              {typeof task.deadline === "string" &&
-                task.deadline.substring(0, 10)}
-            </span>
+            <Tooltip title="Due date">
+              <CalendarTodayIcon className="task__icon" />
+            </Tooltip>
+            <Tooltip title="Due date">
+              <span>
+                {typeof task.deadline === "string" &&
+                  task.deadline.substring(0, 10)}
+              </span>
+            </Tooltip>
           </>
         }
       />
@@ -161,7 +175,6 @@ export default function Task({ task }) {
                 expand={expanded}
                 onClick={handleExpandClick}
                 aria-expanded={expanded}
-                aria-label="show more"
               >
                 <ExpandMoreIcon />
               </ExpandMore>
@@ -175,19 +188,23 @@ export default function Task({ task }) {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Add note" onClick={handleNote}>
-          <span style={{ fontSize: "16px", padding: "0 6px" }}>
-            {Array.isArray(taskNotes) && taskNotes.length}
-          </span>
-          <ChatBubbleOutlineIcon />
-        </IconButton>
+        <Tooltip title="Add note">
+          <IconButton onClick={handleNote}>
+            <span style={{ fontSize: "16px", padding: "0 6px" }}>
+              {Array.isArray(taskNotes) && taskNotes.length}
+            </span>
+            <ChatBubbleOutlineIcon />
+          </IconButton>
+        </Tooltip>
         {currentUser.profile === "DZ" && !task.solution && (
           <UploadSolution key={task.id} task={task} />
         )}
         {task.solution && (
-          <IconButton aria-label="Download solution">
-            <FileDownloadIcon />
-          </IconButton>
+          <Tooltip title={"Download solution " + task.solution}>
+            <IconButton onClick={downloadSolution}>
+              <FileDownloadIcon />
+            </IconButton>
+          </Tooltip>
         )}
         {currentUser.profile === "FR" && task.state === NEW_STATE && (
           <Button

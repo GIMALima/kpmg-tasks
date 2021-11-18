@@ -8,16 +8,8 @@
   clip-path: inset(0px 0px -15px 0px);
 }
 
-.icon {
-  color: #000 !important;
-}
-
 .css-jcn4dz-MuiBadge-badge {
   background-color: #0693e3 !important;
-}
-
-.css-1d6wzja-MuiButton-startIcon > :nth-of-type(1) {
-  color: #fff !important;
 }
 
 .button {

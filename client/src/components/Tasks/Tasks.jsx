@@ -3,9 +3,11 @@ import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
+import Button from "@mui/material/Button";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
+import AddIcon from "@mui/icons-material/Add";
 import Task from "../Task/Task";
 import "./Tasks.css";
 import {
@@ -20,10 +22,12 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-export default function Tasks() {
+export default function Tasks({ setPopup }) {
   const tasks = useSelector((state) => state.taskReducer);
   const newRequests = useSelector((state) => state.tasksReducer);
   const userData = useSelector((state) => state.userReducer);
+
+  const handleClick = () => setPopup(true);
 
   let requests = null;
   let progress = null;
@@ -70,6 +74,19 @@ export default function Tasks() {
               </ListItem>
               {requests &&
                 requests.map((task) => <Task key={task.id} task={task} />)}
+
+              {userData.profile === "FR" && (
+                <Button
+                  onClick={handleClick}
+                  variant="text"
+                  style={{ color: "rgba(0, 0, 0, 0.26)", marginTop: "20px" }}
+                  startIcon={
+                    <AddIcon style={{ color: "rgba(0, 0, 0, 0.26)" }} />
+                  }
+                >
+                  New Task
+                </Button>
+              )}
             </List>
           </Demo>
         </Grid>

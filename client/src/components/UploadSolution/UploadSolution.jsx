@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { uploadSolution } from "../../actions/task.actions";
 import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import { updateTaskState } from "../../actions/task.actions";
@@ -40,9 +41,11 @@ const UploadFile = ({ task }) => {
       />
       {!save && (
         <label htmlFor={task.id} style={{ zIndex: "1000" }}>
-          <Button variant="raised" component="span">
-            <FileUploadIcon />
-          </Button>
+          <Tooltip title="Upload solution">
+            <Button variant="raised" component="span">
+              <FileUploadIcon style={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            </Button>
+          </Tooltip>
         </label>
       )}
       {save && (

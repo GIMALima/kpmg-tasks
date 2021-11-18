@@ -40,7 +40,7 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-const Sidebar = ({ open, toggleDrawer }) => {
+const Sidebar = ({ setPopup, open, toggleDrawer }) => {
   return (
     <>
       <Drawer variant="permanent" open={open}>
@@ -82,7 +82,7 @@ const Sidebar = ({ open, toggleDrawer }) => {
         }}
       >
         <Toolbar />
-        <Tasks />
+        <Tasks setPopup={setPopup} />
       </Box>
     </>
   );

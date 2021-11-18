@@ -11,7 +11,7 @@ const mdTheme = createTheme();
 
 const Home = () => {
   const uid = useContext(UidContext);
-
+  const [popup, setPopup] = useState(false);
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -23,8 +23,17 @@ const Home = () => {
         <ThemeProvider theme={mdTheme}>
           <Box sx={{ display: "flex" }}>
             <CssBaseline />
-            <AppBar open={open} toggleDrawer={toggleDrawer} />
-            <Sidebar open={open} toggleDrawer={toggleDrawer} />
+            <AppBar
+              popup={popup}
+              setPopup={setPopup}
+              open={open}
+              toggleDrawer={toggleDrawer}
+            />
+            <Sidebar
+              setPopup={setPopup}
+              open={open}
+              toggleDrawer={toggleDrawer}
+            />
           </Box>
         </ThemeProvider>
       ) : (
