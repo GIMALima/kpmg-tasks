@@ -19,7 +19,8 @@ module.exports.createNote = (req, res) => {
 };
 
 module.exports.updateNote = (req, res) => {
-  Note.updateNote(req.params.id, req.body.text, (err, note) => {
+  console.log(req.body.noteData.text);
+  Note.updateNote(req.params.id, req.body.noteData.text, (err, note) => {
     if (err) {
       console.log("Update note error : " + err);
       res.status(200).send(err);

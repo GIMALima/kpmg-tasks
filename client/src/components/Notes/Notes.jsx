@@ -49,9 +49,21 @@ BootstrapDialogTitle.propTypes = {
 };
 
 export default function Notes({ notePopup, setNotePopup, notes, task }) {
+  const [editNote, setEditNote] = useState(false);
+  const [noteToEdit, setNoteToEdit] = useState(null);
+
   const handleClose = () => {
     setNotePopup(false);
   };
+
+  useEffect(() => {
+    let note =
+      Array.isArray(notes) &&
+      notes.filter((note) => {
+        return note.id === editNote;
+      })[0];
+    setNoteToEdit(note);
+  }, [editNote]);
 
   return (
     <BootstrapDialog
@@ -64,7 +76,12 @@ export default function Notes({ notePopup, setNotePopup, notes, task }) {
         onClose={handleClose}
         style={{ backgroundColor: "#fafbfc" }}
       >
-        <NoteForm task={task} />
+        <NoteForm
+          task={task}
+          edit={editNote}
+          note={noteToEdit}
+          setEditNote={setEditNote}
+        />
         <List
           sx={{
             width: "100%",
@@ -74,7 +91,9 @@ export default function Notes({ notePopup, setNotePopup, notes, task }) {
           }}
         >
           {Array.isArray(notes) &&
-            notes.map((note) => <Note key={note.id} note={note} />)}
+            notes.map((note) => (
+              <Note key={note.id} note={note} setEditNote={setEditNote} />
+            ))}
         </List>
       </BootstrapDialogTitle>
     </BootstrapDialog>

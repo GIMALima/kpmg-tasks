@@ -46,7 +46,7 @@ Note.createNote = (noteReqData, result) => {
 // Update a note.
 Note.updateNote = (id, text, result) => {
   con.query(
-    "UPDATE note SET text=?,updated_at=? id = ?",
+    "UPDATE note SET text=?,updated_at=? WHERE id=?",
     [text, new Date(), id],
     (err, res) => {
       if (err) {

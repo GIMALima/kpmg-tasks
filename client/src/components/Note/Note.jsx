@@ -20,7 +20,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Note({ note }) {
+export default function Note({ note, setEditNote }) {
   const users = useSelector((state) => state.usersReducer);
   const currentUser = useSelector((state) => state.userReducer);
   const [noteUser, setNoteUser] = useState(null);
@@ -71,7 +71,7 @@ export default function Note({ note }) {
               {noteUser && note.created_at.substring(11, 16)}
             </span>
             {currentUser && noteUser && currentUser.id === noteUser.id && (
-              <ActionMenu key={note.id} note={note} />
+              <ActionMenu key={note.id} note={note} setEditNote={setEditNote} />
             )}
           </div>
         </Typography>

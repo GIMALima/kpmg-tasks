@@ -11,7 +11,7 @@ import { deleteNote } from "../../../actions/note.actions";
 import { useDispatch } from "react-redux";
 import "./ActionMenu.css";
 
-export default function ActionMenu({ note }) {
+export default function ActionMenu({ note, setEditNote }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
@@ -27,6 +27,8 @@ export default function ActionMenu({ note }) {
   const handleDeleteNote = () => {
     dispatch(deleteNote(note.id));
   };
+
+  const handleEditNote = () => setEditNote(note.id);
 
   return (
     <React.Fragment>
@@ -79,7 +81,10 @@ export default function ActionMenu({ note }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
-          <IconButton className="actionMenu__iconButton">
+          <IconButton
+            className="actionMenu__iconButton"
+            onClick={handleEditNote}
+          >
             <EditIcon fontSize="small" className="actionMenu__icon" />
             Edit
           </IconButton>

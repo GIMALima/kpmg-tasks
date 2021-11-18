@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, Typography, TextareaAutosize } from "@mui/material";
-import { addNote, getNotes } from "../../../actions/note.actions";
+import { addNote, updateNote } from "../../../actions/note.actions";
 import { useForm } from "react-hook-form";
 
-export default function NoteForm({ task }) {
+export default function NoteForm({ task, note, edit, setEditNote }) {
   const userData = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  const [text, setText] = useState("");
+  const [text, setText] = useState(edit && note ? note.text : "");
 
   const {
     handleSubmit,
@@ -21,17 +21,22 @@ export default function NoteForm({ task }) {
     return errors?.text ? errors.text.message : "";
   };
 
+  useEffect(() => {
+    setText(edit && note ? note.text : "");
+  }, [note]);
+
   const handleNote = async (noteData) => {
     noteData.creator = userData.id;
     noteData.task = task.id;
 
-    await dispatch(addNote(noteData));
+    await dispatch(!edit ? addNote(noteData) : updateNote(note.id, noteData));
 
     resetForm();
   };
 
   const resetForm = () => {
     setText("");
+    setEditNote(false);
   };
 
   return (
@@ -80,7 +85,7 @@ export default function NoteForm({ task }) {
             marginTop: "10px",
           }}
         >
-          Add note
+          {edit && note ? "Edit note" : "Add note"}
         </button>
       </Grid>
     </Box>
