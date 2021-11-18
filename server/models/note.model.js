@@ -8,10 +8,10 @@ var Note = function (note) {
 };
 
 // Fetch a task notes.
-Note.readNote = (taskId, result) => {
-  con.query("SELECT * FROM note WHERE task = '" + taskId + "'", (err, res) => {
+Note.readNote = (result) => {
+  con.query("SELECT * FROM note", (err, res) => {
     if (err) {
-      console.log("Error while fetching task notes", err);
+      console.log("Error while fetching notes", err);
       result(null, err);
     } else {
       console.log("Task notes fetched successfully");

@@ -9,6 +9,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
 import { getAllTasks } from "./actions/task.actions";
 import { getAllUsers } from "./actions/user.actions";
+import { getNotes } from "./actions/note.actions";
 
 const store = createStore(
   rootReducer,
@@ -17,6 +18,7 @@ const store = createStore(
 
 store.dispatch(getAllTasks());
 store.dispatch(getAllUsers());
+store.dispatch(getNotes());
 
 ReactDOM.render(
   <Provider store={store}>

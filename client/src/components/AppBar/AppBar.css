@@ -23,3 +23,7 @@
 .button {
   background-color: #0693e3 !important;
 }
+
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+  width: 100% !important;
+}

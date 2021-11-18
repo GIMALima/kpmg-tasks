@@ -18,6 +18,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import UploadSolution from "../UploadSolution/UploadSolution";
 import { useDispatch, useSelector } from "react-redux";
+import Notes from "../Notes/Notes";
 import {
   deleteTask,
   updateTaskState,
@@ -45,9 +46,12 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function Task({ task }) {
-  const [expanded, setExpanded] = React.useState(false);
+  const notes = useSelector((state) => state.noteReducer);
+  const [expanded, setExpanded] = useState(false);
   const [popup, setPopup] = useState(false);
+  const [notePopup, setNotePopup] = useState(false);
   const [taskUser, setTaskUser] = useState(null);
+  const [taskNotes, setTaskNotes] = useState(null);
   const currentUser = useSelector((state) => state.userReducer);
   const users = useSelector((state) => state.usersReducer);
   const dispatch = useDispatch();
@@ -67,19 +71,24 @@ export default function Task({ task }) {
   const handleApproveTask = () =>
     dispatch(updateTaskState(task.id, COMPLETED_STATE));
 
+  const handleNote = () => setNotePopup(true);
+
   useEffect(() => {
     const userId = currentUser.profile === "DZ" ? task.creator : task.assignee;
-
     let u =
       Array.isArray(users) &&
       users.filter((user) => {
         return user.id === userId;
       })[0];
-
-    console.log(u);
-
     setTaskUser(u);
-  }, [dispatch]);
+
+    const taskNotes =
+      Array.isArray(notes) &&
+      notes.filter((note) => {
+        return note.task === task.id;
+      });
+    setTaskNotes(taskNotes);
+  }, [notes]);
 
   const getColor = () => {
     return task.state === NEW_STATE
@@ -97,9 +106,13 @@ export default function Task({ task }) {
     <Card sx={{ maxWidth: "100%", marginTop: "15px" }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
-          </Avatar>
+          <Avatar
+            sx={{ bgcolor: red[500] }}
+            alt={
+              currentUser && currentUser.firstname + " " + currentUser.lastname
+            }
+            src="/assets"
+          ></Avatar>
         }
         action={
           currentUser.profile === "FR" &&
@@ -142,23 +155,30 @@ export default function Task({ task }) {
           color="text.secondary"
         >
           {!expanded && task.description.substring(0, 100)}
-          <ExpandMore
-            expand={expanded}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </ExpandMore>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>{task.description}</Typography>
-            </CardContent>
-          </Collapse>
+          {task.description.length > 100 && (
+            <>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+              <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <CardContent>
+                  <Typography paragraph>{task.description}</Typography>
+                </CardContent>
+              </Collapse>
+            </>
+          )}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="Add note">
+        <IconButton aria-label="Add note" onClick={handleNote}>
+          <span style={{ fontSize: "16px", padding: "0 6px" }}>
+            {Array.isArray(taskNotes) && taskNotes.length}
+          </span>
           <ChatBubbleOutlineIcon />
         </IconButton>
         {currentUser.profile === "DZ" && !task.solution && (
@@ -202,6 +222,12 @@ export default function Task({ task }) {
           </Button>
         )}
       </CardActions>
+      <Notes
+        notePopup={notePopup}
+        setNotePopup={setNotePopup}
+        notes={taskNotes}
+        task={task}
+      />
       <TaskForm popup={popup} setPopup={setPopup} task={task} edit={true} />
     </Card>
   );

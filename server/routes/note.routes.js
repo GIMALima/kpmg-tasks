@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const noteController = require("../controllers/note.controller");
 
-// Endpoint to fetch all notes of a task.
-router.get("/:id", noteController.readNote);
+// Endpoint to fetch all notes.
+router.get("/", noteController.readNote);
 
 // Endpoint for note creation.
 router.post("/", noteController.createNote);

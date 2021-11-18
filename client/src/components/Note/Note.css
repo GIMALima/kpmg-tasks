@@ -1,0 +1,18 @@
+.note {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  border-radius: 6px;
+  min-width: 400px;
+  display: grid;
+  width: 100%;
+}
+
+.note__user {
+  margin-right: 4px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.note__date {
+  color: #7c7c7c;
+}

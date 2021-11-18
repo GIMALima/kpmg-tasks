@@ -3,6 +3,7 @@ import userReducer from "./user.reducer";
 import taskReducer from "./task.reducer";
 import tasksReducer from "./tasks.reducer";
 import usersReducer from "./users.reducer";
+import noteReducer from "./note.reducer";
 import errorReducer from "./error.reducer";
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
   taskReducer,
   tasksReducer,
   usersReducer,
+  noteReducer,
   errorReducer,
 });

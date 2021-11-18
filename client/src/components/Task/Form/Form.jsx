@@ -95,11 +95,11 @@ export default function TaskForm({ popup, setPopup, task, edit }) {
     await dispatch(!edit ? addTask(taskData) : updateTask(task.id, taskData));
     dispatch(getTasks(userData.id));
 
-    resestForm();
+    resetForm();
     handleClose();
   };
 
-  const resestForm = () => {
+  const resetForm = () => {
     setTitle("");
     setDescription("");
     setDeadline(new Date());

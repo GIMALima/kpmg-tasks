@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 
 // User entity.
 var User = function (user) {
-  this.firstname = user.firstname;
-  this.lastname = user.lastname;
+  this.firstname =
+    user.firstname?.charAt(0).toUpperCase() + user.firstname?.slice(1);
+  this.lastname =
+    user.lastname?.charAt(0).toUpperCase() + user.lastname?.slice(1);
   this.email = user.email;
   this.password = user.password;
   this.profile = user.profile;
