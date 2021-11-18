@@ -1,5 +1,4 @@
 const express = require("express");
-require("dotenv").config({ path: "./.env" });
 const cookieParser = require("cookie-parser");
 const helmet = require("helmet");
 const morgan = require("morgan");
@@ -8,6 +7,7 @@ const taskRoutes = require("./routes/task.routes");
 const noteRoutes = require("./routes/note.routes");
 const { checkUser, requireAuth } = require("./middleware/auth.middleware");
 const cors = require("cors");
+require("dotenv").config({ path: "./.env" });
 
 // Create express app.
 const app = express();
@@ -21,7 +21,7 @@ const corsOptions = {
   preflightContinue: false,
 };
 
-// Middleware.
+// Middlewares.
 app.use(cors(corsOptions));
 app.use(helmet());
 app.use(morgan("common"));
@@ -37,7 +37,7 @@ app.get("/jwtid", requireAuth, (req, res) => {
 
 // Define root route.
 app.get("/", (req, res) => {
-  res.send("Hello to KPMG Task App REST API");
+  res.send("Hello to KPMG TASKS App REST API");
 });
 
 // Routes.

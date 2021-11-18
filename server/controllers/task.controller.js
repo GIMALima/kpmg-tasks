@@ -1,19 +1,19 @@
-const Task = require("../models/task.model");
-const { uploadErrors } = require("../utils/errors.utils");
 const fs = require("fs");
 const { promisify } = require("util");
 const pipeline = promisify(require("stream").pipeline);
+const Task = require("../models/task.model");
+const { uploadErrors } = require("../utils/errors.utils");
 
-module.exports.readAllTask = (req, res) => {
-  Task.readAllTask((err, task) => {
+module.exports.getAllTask = (req, res) => {
+  Task.getAllTask((err, task) => {
     if (err) {
       res.status(400).send(err);
     } else res.status(200).send(task);
   });
 };
 
-module.exports.readTask = (req, res) => {
-  Task.readTask(req.params.id, (err, task) => {
+module.exports.getTasks = (req, res) => {
+  Task.getTasks(req.params.id, (err, task) => {
     if (err) {
       res.status(400).send(err);
     } else res.status(200).send(task);
@@ -22,7 +22,6 @@ module.exports.readTask = (req, res) => {
 
 module.exports.createTask = (req, res) => {
   const taskData = new Task(req.body);
-
   Task.createTask(taskData, (err, task) => {
     if (err) {
       res.status(400).send(err);
@@ -33,7 +32,7 @@ module.exports.createTask = (req, res) => {
 module.exports.updateTask = (req, res) => {
   Task.updateTask(req.params.id, req.body.taskData, (err, task) => {
     if (err) {
-      console.log("Update error : " + err);
+      console.log("Update task error : " + err);
       res.status(200).send(err);
     } else res.status(200).json(task);
   });
@@ -46,7 +45,7 @@ module.exports.assignTask = (req, res) => {
     req.body.state,
     (err, task) => {
       if (err) {
-        console.log("Update error : " + err);
+        console.log("Assign task error : " + err);
         res.status(200).send(err);
       } else res.status(200).json(task);
     }
@@ -56,7 +55,7 @@ module.exports.assignTask = (req, res) => {
 module.exports.deleteTask = (req, res) => {
   Task.deleteTask(req.params.id, (err, task) => {
     if (err) {
-      console.log("Delete error : " + err);
+      console.log("Delete task error : " + err);
       res.status(200).send(err);
     } else res.status(200).json(task);
   });
@@ -82,7 +81,7 @@ module.exports.uploadSolution = async (req, res) => {
 
     Task.uploadSolutionTask(req.params.id, filename, (err, task) => {
       if (err) {
-        console.log("Upload error : " + err);
+        console.log("Upload solution error : " + err);
         res.status(200).send(err);
       } else res.status(200).json(task);
     });

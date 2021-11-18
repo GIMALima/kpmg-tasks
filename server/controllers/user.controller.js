@@ -12,7 +12,6 @@ const createToken = (id) => {
 
 module.exports.signup = (req, res) => {
   const userData = new User(req.body);
-
   User.createUser(userData, (err, user) => {
     if (err) {
       const errors = signupErrors(err);
@@ -23,7 +22,6 @@ module.exports.signup = (req, res) => {
 
 module.exports.signin = (req, res) => {
   const userData = new User(req.body);
-
   User.login(userData, (err, user) => {
     if (err) {
       const errors = signinErrors(err);

@@ -14,7 +14,7 @@ var Task = function (task) {
 };
 
 // Fetch all new request.
-Task.readAllTask = (result) => {
+Task.getAllTask = (result) => {
   con.query("SELECT * FROM task WHERE state='request'", (err, res) => {
     if (err) {
       console.log("Error while fetching tasks", err);
@@ -27,7 +27,7 @@ Task.readAllTask = (result) => {
 };
 
 // Fetch a user tasks by state.
-Task.readTask = (id, result) => {
+Task.getTasks = (id, result) => {
   con.query(
     "SELECT * FROM task WHERE creator=? OR assignee=?",
     [id, id],
@@ -45,7 +45,7 @@ Task.readTask = (id, result) => {
 
 // Fetch task by id.
 Task.getTaskById = (id, result) => {
-  con.query('SELECT * FROM task WHERE id = "' + id + '"', (err, task) => {
+  con.query("SELECT * FROM task WHERE id=?", [id], (err, task) => {
     if (err) result(err.message, null);
     else {
       console.log("Task found successfully");
@@ -69,7 +69,7 @@ Task.createTask = (taskReqData, result) => {
 // Update a task.
 Task.updateTask = (id, taskReqData, result) => {
   con.query(
-    "UPDATE task SET title=?,description=?,deadline=?,updated_at=? WHERE id = ?",
+    "UPDATE task SET title=?,description=?,deadline=?,updated_at=? WHERE id=?",
     [
       taskReqData.title,
       taskReqData.description,
@@ -91,7 +91,7 @@ Task.updateTask = (id, taskReqData, result) => {
 // Assign a task.
 Task.assignTask = (id, userId, state, result) => {
   con.query(
-    "UPDATE task SET assignee=?,state=?,updated_at=? WHERE id = ?",
+    "UPDATE task SET assignee=?,state=?,updated_at=? WHERE id=?",
     [userId, state, new Date(), id],
     (err, res) => {
       if (err) {
@@ -119,7 +119,7 @@ Task.deleteTask = (id, result) => {
 // Upload task solution.
 Task.uploadSolutionTask = (id, file, result) => {
   con.query(
-    "UPDATE task SET solution=?,updated_at=? WHERE id = ?",
+    "UPDATE task SET solution=?,updated_at=? WHERE id=?",
     [file, new Date(), id],
     (err, res) => {
       if (err) {
@@ -134,7 +134,7 @@ Task.uploadSolutionTask = (id, file, result) => {
 
 Task.updateTaskState = (id, newState, result) => {
   con.query(
-    "UPDATE task SET state=?,updated_at=? WHERE id = ?",
+    "UPDATE task SET state=?,updated_at=? WHERE id=?",
     [newState, new Date(), id],
     (err, res) => {
       if (err) {

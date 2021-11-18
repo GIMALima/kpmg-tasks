@@ -1,7 +1,7 @@
 const Note = require("../models/note.model");
 
-module.exports.readNote = (req, res) => {
-  Note.readNote((err, notes) => {
+module.exports.getNotes = (req, res) => {
+  Note.getNote((err, notes) => {
     if (err) {
       res.status(400).send(err);
     } else res.status(200).send(notes);
@@ -10,7 +10,6 @@ module.exports.readNote = (req, res) => {
 
 module.exports.createNote = (req, res) => {
   const noteData = new Note(req.body);
-
   Note.createNote(noteData, (err, note) => {
     if (err) {
       res.status(400).send(err);

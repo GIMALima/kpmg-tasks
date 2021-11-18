@@ -7,8 +7,8 @@ var Note = function (note) {
   this.task = note.task;
 };
 
-// Fetch a task notes.
-Note.readNote = (result) => {
+// Fetch all notes.
+Note.getNotes = (result) => {
   con.query("SELECT * FROM note", (err, res) => {
     if (err) {
       console.log("Error while fetching notes", err);
@@ -22,7 +22,7 @@ Note.readNote = (result) => {
 
 // Fetch note by id.
 Note.getNoteById = (id, result) => {
-  con.query('SELECT * FROM note WHERE id = "' + id + '"', (err, note) => {
+  con.query("SELECT * FROM note WHERE id=?", [id], (err, note) => {
     if (err) result(err.message, null);
     else {
       console.log("Note found successfully");

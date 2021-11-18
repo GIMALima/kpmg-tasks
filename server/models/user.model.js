@@ -4,9 +4,9 @@ const bcrypt = require("bcrypt");
 // User entity.
 var User = function (user) {
   this.firstname =
-    user.firstname?.charAt(0).toUpperCase() + user.firstname?.slice(1);
+    user.firstname?.charAt(0).toUpperCase() + user.firstname?.slice(1); // Capitalize user firstname.
   this.lastname =
-    user.lastname?.charAt(0).toUpperCase() + user.lastname?.slice(1);
+    user.lastname?.charAt(0).toUpperCase() + user.lastname?.slice(1); // Capitalize user lastname.
   this.email = user.email;
   this.password = user.password;
   this.profile = user.profile;
@@ -53,7 +53,8 @@ User.createUser = async (userReqData, result) => {
 // Check if user exists by email and password.
 User.login = async (userReqData, result) => {
   con.query(
-    'SELECT * FROM user WHERE email = "' + userReqData.email + '"',
+    "SELECT * FROM user WHERE email=?",
+    [userReqData.email],
     async (err, res) => {
       if (err || res.length == 0) {
         result("email incorrect", null);
