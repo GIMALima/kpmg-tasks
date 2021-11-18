@@ -1,4 +1,4 @@
-import { GET_NOTES, ADD_NOTE } from "../actions/note.actions";
+import { GET_NOTES, ADD_NOTE, DELETE_NOTE } from "../actions/note.actions";
 
 const initialState = {};
 
@@ -9,6 +9,9 @@ export default function noteReducer(state = initialState, action) {
 
     case ADD_NOTE:
       return [...state, action.payload];
+
+    case DELETE_NOTE:
+      return state.filter((note) => note.id !== action.payload.noteId);
 
     default:
       return state;

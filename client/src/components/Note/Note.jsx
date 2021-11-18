@@ -4,18 +4,16 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Collapse from "@mui/material/Collapse";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ActionMenu from "./ActionsMenu/ActionMenu";
 import "./Note.css";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
   marginLeft: "auto",
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
@@ -63,36 +61,29 @@ export default function Note({ note }) {
           color="text.primary"
           style={{ marginBottom: "5px" }}
         >
-          <span className="note__user">
-            {noteUser && noteUser.firstname + " " + noteUser.lastname}
-          </span>
-          <span className="note__date">
-            {noteUser && note.created_at.substring(0, 10)}
-            {" at "}
-            {noteUser && note.created_at.substring(11, 16)}
-          </span>
+          <div style={{ display: "flex" }}>
+            <span className="note__user">
+              {noteUser && noteUser.firstname + " " + noteUser.lastname}
+            </span>
+            <span className="note__date">
+              {noteUser && note.created_at.substring(0, 10)}
+              {" at "}
+              {noteUser && note.created_at.substring(11, 16)}
+            </span>
+            {currentUser && noteUser && currentUser.id === noteUser.id && (
+              <ActionMenu key={note.id} note={note} />
+            )}
+          </div>
         </Typography>
-        <div style={{ display: "flex" }}>
-          <Typography
-            sx={{ display: "inline" }}
-            component="span"
-            variant="body2"
-            color="text.primary"
-            style={{ textAlign: "justify" }}
-          >
-            {!expanded && note.text.substring(0, 100)}
-          </Typography>
-          {note.text.length > 100 && (
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <MoreHorizIcon />
-            </ExpandMore>
-          )}
-        </div>
+        <Typography
+          sx={{ display: "inline" }}
+          component="span"
+          variant="body2"
+          color="text.primary"
+          style={{ textAlign: "justify" }}
+        >
+          {!expanded && note.text.substring(0, 200)}
+        </Typography>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Typography
             sx={{ display: "inline" }}
@@ -104,6 +95,18 @@ export default function Note({ note }) {
             {note.text}
           </Typography>
         </Collapse>
+        {note.text.length > 200 && (
+          <ExpandMore
+            expand={expanded}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <span style={{ fontSize: "14px", padding: "5px" }}>
+              {!expanded ? "Show more" : "Show less"}
+            </span>
+          </ExpandMore>
+        )}
       </div>
     </ListItem>
   );

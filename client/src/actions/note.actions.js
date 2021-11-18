@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_NOTES = "GET_NOTES";
 export const ADD_NOTE = "ADD_NOTE";
+export const DELETE_NOTE = "DELETE_NOTE";
 
 export const GET_NOTES_ERRORS = "GET_NOTES_ERRORS";
 
@@ -27,5 +28,18 @@ export const addNote = (data) => {
           dispatch({ type: ADD_NOTE, payload: res.data });
         }
       });
+  };
+};
+
+export const deleteNote = (noteId) => {
+  return (dispatch) => {
+    return axios({
+      method: "delete",
+      url: `${process.env.REACT_APP_API_URL}api/note/${noteId}`,
+    })
+      .then((res) => {
+        dispatch({ type: DELETE_NOTE, payload: { noteId } });
+      })
+      .catch((err) => console.log(err));
   };
 };
