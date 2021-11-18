@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
+import { useDispatch } from "react-redux";
+import { Box, Menu, MenuItem, IconButton, Tooltip } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-import Tooltip from "@mui/material/Tooltip";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteNote } from "../../../actions/note.actions";
-import { useDispatch } from "react-redux";
 import "./ActionMenu.css";
 
 export default function ActionMenu({ note, setEditNote }) {
@@ -16,17 +12,11 @@ export default function ActionMenu({ note, setEditNote }) {
   const dispatch = useDispatch();
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleClick = (event) => setAnchorEl(event.currentTarget);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
-  const handleDeleteNote = () => {
-    dispatch(deleteNote(note.id));
-  };
+  const handleDeleteNote = () => dispatch(deleteNote(note.id));
 
   const handleEditNote = () => setEditNote(note.id);
 

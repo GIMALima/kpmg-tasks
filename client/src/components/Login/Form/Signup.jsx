@@ -1,18 +1,20 @@
 import React, { useRef } from "react";
-import Avatar from "@mui/material/Avatar";
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import MenuItem from "@mui/material/MenuItem";
-import Grid from "@mui/material/Grid";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
+import {
+  Avatar,
+  CssBaseline,
+  Box,
+  Card,
+  Button,
+  TextField,
+  MenuItem,
+  Grid,
+  Typography,
+  Container,
+  FormControlLabel,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Checkbox from "@mui/material/Checkbox";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import "./Form.css";
@@ -67,9 +69,7 @@ const Signup = () => {
 
   const [profile, setProfile] = React.useState("FR");
 
-  const handleChange = (event) => {
-    setProfile(event.target.value);
-  };
+  const handleChange = (event) => setProfile(event.target.value);
 
   const handleSignup = (userData) => {
     const emailError = document.querySelector(".email.error");
@@ -117,7 +117,7 @@ const Signup = () => {
               sx={{ mt: 3 }}
             >
               {handleValidation() && (
-                <span className="error">{handleValidation()}</span>
+                <span className="form__error">{handleValidation()}</span>
               )}
               <Typography className="email error"></Typography>
               <Typography className="password error"></Typography>
@@ -230,7 +230,7 @@ const Signup = () => {
                 type="submit"
                 fullWidth
                 size="large"
-                className="button"
+                className="form__button"
                 variant="contained"
                 sx={{ mt: 4, mb: 2 }}
               >

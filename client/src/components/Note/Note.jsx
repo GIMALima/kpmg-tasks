@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import ListItem from "@mui/material/ListItem";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import Collapse from "@mui/material/Collapse";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  Typography,
+  Collapse,
+  IconButton,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
 import ActionMenu from "./ActionsMenu/ActionMenu";
 import "./Note.css";
 
@@ -20,7 +22,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Note({ note, setEditNote }) {
+const Note = ({ note, setEditNote }) => {
   const users = useSelector((state) => state.usersReducer);
   const currentUser = useSelector((state) => state.userReducer);
   const [noteUser, setNoteUser] = useState(null);
@@ -110,4 +112,6 @@ export default function Note({ note, setEditNote }) {
       </div>
     </ListItem>
   );
-}
+};
+
+export default Note;

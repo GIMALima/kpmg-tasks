@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
+import { Dialog, DialogTitle, IconButton, List } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import List from "@mui/material/List";
 import Note from "../Note/Note";
-import { useDispatch, useSelector } from "react-redux";
 import NoteForm from "../Note/Form/Form";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -48,13 +44,11 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function Notes({ notePopup, setNotePopup, notes, task }) {
+const Notes = ({ notePopup, setNotePopup, notes, task }) => {
   const [editNote, setEditNote] = useState(false);
   const [noteToEdit, setNoteToEdit] = useState(null);
 
-  const handleClose = () => {
-    setNotePopup(false);
-  };
+  const handleClose = () => setNotePopup(false);
 
   useEffect(() => {
     let note =
@@ -98,4 +92,6 @@ export default function Notes({ notePopup, setNotePopup, notes, task }) {
       </BootstrapDialogTitle>
     </BootstrapDialog>
   );
-}
+};
+
+export default Notes;

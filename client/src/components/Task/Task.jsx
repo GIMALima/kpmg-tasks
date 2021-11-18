@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAs } from "file-saver";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Collapse,
+  Avatar,
+  IconButton,
+  Button,
+  Typography,
+  Tooltip,
+} from "@mui/material";
 import { red } from "@mui/material/colors";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutline";
-import Tooltip from "@mui/material/Tooltip";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import UploadSolution from "../UploadSolution/UploadSolution";
-import { useDispatch, useSelector } from "react-redux";
 import Notes from "../Notes/Notes";
 import {
   deleteTask,
@@ -33,7 +36,6 @@ import {
   COMPLETED_STATE,
 } from "../../Constants";
 import TaskForm from "../Task/Form/Form";
-import { saveAs } from "file-saver";
 import "./Task.css";
 
 const ExpandMore = styled((props) => {
@@ -47,7 +49,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Task({ task }) {
+const Task = ({ task }) => {
   const notes = useSelector((state) => state.noteReducer);
   const [expanded, setExpanded] = useState(false);
   const [popup, setPopup] = useState(false);
@@ -93,20 +95,26 @@ export default function Task({ task }) {
   }, [notes]);
 
   const getColor = () => {
-    return task.state === NEW_STATE
-      ? "#8EE1EA"
-      : task.state === PROGRESS_STATE
-      ? "#C55494"
-      : task.state === REVIEW_STATE
-      ? "#D8C923"
-      : task.state === COMPLETED_STATE
-      ? "#0693e3"
-      : "#8EE1EA";
+    switch (task.state) {
+      case NEW_STATE:
+        return "#8EE1EA";
+
+      case PROGRESS_STATE:
+        return "#C55494";
+
+      case REVIEW_STATE:
+        return "#D8C923";
+
+      case COMPLETED_STATE:
+        return "#0693e3";
+
+      default:
+        return "#C55494";
+    }
   };
 
-  const downloadSolution = () => {
+  const downloadSolution = () =>
     saveAs("./uploads/solutions/" + task.solution, task.solution);
-  };
 
   return (
     <Card sx={{ maxWidth: "100%", marginTop: "15px" }}>
@@ -248,4 +256,6 @@ export default function Task({ task }) {
       <TaskForm popup={popup} setPopup={setPopup} task={task} edit={true} />
     </Card>
   );
-}
+};
+
+export default Task;

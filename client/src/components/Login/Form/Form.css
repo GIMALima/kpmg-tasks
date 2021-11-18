@@ -1,5 +1,9 @@
-.error {
+.form__error {
   color: red;
+}
+
+.form__button {
+  background-color: #0693e3 !important;
 }
 
 .css-binzgt {
@@ -10,10 +14,6 @@
 .css-nzinn5-MuiContainer-root {
   margin-left: 30px !important;
   margin-right: 30px !important;
-}
-
-.button {
-  background-color: #0693e3 !important;
 }
 
 .css-mhc70k-MuiGrid-root > .MuiGrid-item {

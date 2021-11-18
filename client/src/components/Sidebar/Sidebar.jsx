@@ -1,12 +1,8 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import { NavLink } from "react-router-dom";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
+import { Box, Toolbar, List, Divider, IconButton } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import MainListItems from "./ListItems";
 import Tasks from "../../components/Tasks/Tasks";

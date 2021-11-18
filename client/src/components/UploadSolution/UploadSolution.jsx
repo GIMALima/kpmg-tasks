@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { uploadSolution } from "../../actions/task.actions";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+import { Button, Tooltip } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
 import { updateTaskState } from "../../actions/task.actions";
+import { uploadSolution } from "../../actions/task.actions";
 import { REVIEW_STATE } from "../../Constants";
 
 const UploadFile = ({ task }) => {

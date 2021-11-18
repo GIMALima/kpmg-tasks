@@ -3,9 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./Header.css";
 
 const Header = ({ isSignup, setIsSignUp }) => {
-  const handleClick = () => {
-    setIsSignUp(!isSignup);
-  };
+  const handleClick = () => setIsSignUp(!isSignup);
 
   return (
     <div className="login__header">
@@ -16,16 +14,16 @@ const Header = ({ isSignup, setIsSignUp }) => {
           className="navbar__headerLogo"
         />
       </NavLink>
-      <div className="login_headerContainer">
+      <div className="login__headerContainer">
         <>
           {isSignup && (
             <>
-              <span className="login_headerContainerText">
+              <span className="login__headerContainerText">
                 I already have an account KPMG TASKS?
               </span>
               <button
                 onClick={handleClick}
-                className="login_headerContainerButton"
+                className="login__headerContainerButton"
               >
                 Sign in
               </button>
@@ -34,12 +32,12 @@ const Header = ({ isSignup, setIsSignUp }) => {
 
           {!isSignup && (
             <>
-              <span className="login_headerContainerText">
+              <span className="login__headerContainerText">
                 I don't have an account KPMG TASKS?
               </span>
               <button
                 onClick={handleClick}
-                className="login_headerContainerButton"
+                className="login__headerContainerButton"
               >
                 Sign up
               </button>

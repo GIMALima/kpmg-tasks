@@ -1,14 +1,14 @@
-.css-399ykn {
-  max-width: 100% !important;
-  padding: 30px !important;
-}
-
 .tasks__count {
   border: 1px solid gray;
   padding: 5px 10px;
   border-radius: 100%;
   margin-left: 10px;
   color: gray;
+}
+
+.css-399ykn {
+  max-width: 100% !important;
+  padding: 30px !important;
 }
 
 .css-h4y409-MuiList-root {

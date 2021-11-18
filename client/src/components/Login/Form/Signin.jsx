@@ -92,10 +92,12 @@ const Signin = () => {
               sx={{ mt: 3 }}
             >
               {handleValidation() && (
-                <Typography className="error">{handleValidation()}</Typography>
+                <Typography className="form__error">
+                  {handleValidation()}
+                </Typography>
               )}
-              <Typography className="email error"></Typography>
-              <Typography className="password error"></Typography>
+              <Typography className="email form__error"></Typography>
+              <Typography className="password form__error"></Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -137,7 +139,7 @@ const Signin = () => {
                 fullWidth
                 size="large"
                 variant="contained"
-                className="button"
+                className="form__button"
                 sx={{ mt: 3, mb: 2 }}
               >
                 Sign In

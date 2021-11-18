@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
+import React from "react";
+import { Box, List, ListItemButton } from "@mui/material";
 import {
   NEW_STATE,
   PROGRESS_STATE,
@@ -10,10 +8,8 @@ import {
 } from "../../Constants";
 import "./StateFilter.css";
 
-export default function StateFilter({ selectedState, setSelectedState }) {
-  const handleListItemClick = (event, state) => {
-    setSelectedState(state);
-  };
+const StateFilter = ({ selectedState, setSelectedState }) => {
+  const handleListItemClick = (event, state) => setSelectedState(state);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -71,4 +67,6 @@ export default function StateFilter({ selectedState, setSelectedState }) {
       </List>
     </Box>
   );
-}
+};
+
+export default StateFilter;

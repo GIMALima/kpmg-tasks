@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Grid, Typography, TextareaAutosize } from "@mui/material";
-import { addNote, updateNote } from "../../../actions/note.actions";
 import { useForm } from "react-hook-form";
+import { addNote, updateNote } from "../../../actions/note.actions";
 
 export default function NoteForm({ task, note, edit, setEditNote }) {
   const userData = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
   const [text, setText] = useState(edit && note ? note.text : "");
+  const dispatch = useDispatch();
 
   const {
     handleSubmit,

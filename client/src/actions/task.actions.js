@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Tasks.
+// Actions.
 export const GET_TASKS = "GET_TASKS";
 export const GET_ALL_TASKS = "GET_ALL_TASKS";
 export const ADD_TASK = "ADD_TASK";

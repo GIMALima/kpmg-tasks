@@ -11,13 +11,13 @@
   margin-right: 10px;
 }
 
-.login_headerContainer {
+.login__headerContainer {
   display: flex;
   align-items: center;
   margin-left: auto;
 }
 
-.login_headerContainerText {
+.login__headerContainerText {
   font-size: 14px;
   font-weight: 400;
   line-height: 16px;
@@ -25,7 +25,7 @@
   margin-right: 20px;
 }
 
-.login_headerContainerButton {
+.login__headerContainerButton {
   font-size: 14px;
   font-weight: 700;
   line-height: 16px;

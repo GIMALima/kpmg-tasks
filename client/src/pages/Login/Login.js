@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Header from "../../components/Login/Header/Header";
 import Signup from "../../components/Login/Form/Signup";
 import Signin from "../../components/Login/Form/Signin";
-import "./Login.css";
 import Copyright from "../../components/Copyright/Copyright";
+import "./Login.css";
 
 const Login = () => {
   const [isSignup, setIsSignUp] = useState(false);

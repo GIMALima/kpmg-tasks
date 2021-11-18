@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import Button from "@mui/material/Button";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Grid from "@mui/material/Grid";
 import AddIcon from "@mui/icons-material/Add";
+import { Box, List, Button, ListItem, ListItemText, Grid } from "@mui/material";
 import Task from "../Task/Task";
 import "./Tasks.css";
 import {
@@ -22,7 +17,7 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-export default function Tasks({ setPopup, selectedState }) {
+const Tasks = ({ setPopup, selectedState }) => {
   const tasks = useSelector((state) => state.taskReducer);
   const newRequests = useSelector((state) => state.tasksReducer);
   const userData = useSelector((state) => state.userReducer);
@@ -194,4 +189,6 @@ export default function Tasks({ setPopup, selectedState }) {
       </Grid>
     </Box>
   );
-}
+};
+
+export default Tasks;

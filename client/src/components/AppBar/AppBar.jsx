@@ -1,12 +1,7 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
-import Button from "@mui/material/Button";
+import { Toolbar, Typography, IconButton, Badge, Button } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import AddIcon from "@mui/icons-material/Add";
@@ -36,9 +31,7 @@ const StyledAppBar = styled(MuiAppBar, {
 const AppBar = ({ popup, setPopup, open, toggleDrawer }) => {
   const userData = useSelector((state) => state.userReducer);
 
-  const handleClickOpen = () => {
-    setPopup(true);
-  };
+  const handleClickOpen = () => setPopup(true);
 
   return (
     <StyledAppBar position="absolute" open={open}>
@@ -73,7 +66,7 @@ const AppBar = ({ popup, setPopup, open, toggleDrawer }) => {
             variant="contained"
             startIcon={<AddIcon style={{ color: "#fff" }} />}
             onClick={handleClickOpen}
-            className="button"
+            className="appBar__button"
           >
             New Task
           </Button>
