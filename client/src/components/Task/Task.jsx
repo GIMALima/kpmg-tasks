@@ -109,7 +109,7 @@ const Task = ({ task }) => {
         return "#0693e3";
 
       default:
-        return "#C55494";
+        return "#8EE1EA";
     }
   };
 

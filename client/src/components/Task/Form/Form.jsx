@@ -133,7 +133,7 @@ const TaskForm = ({ popup, setPopup, task, edit }) => {
                 <>
                   <Grid item xs={12} sm={2}></Grid>
                   <Grid item xs={12} sm={10}>
-                    <Typography className="error">
+                    <Typography className="form__error">
                       {handleValidation()}
                     </Typography>
                   </Grid>
