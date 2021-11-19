@@ -21,6 +21,8 @@ import DeleteIcon from "@mui/icons-material/DeleteOutline";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
+import SendIcon from "@mui/icons-material/Send";
+import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import UploadSolution from "../UploadSolution/UploadSolution";
 import Notes from "../Notes/Notes";
 import {
@@ -74,6 +76,9 @@ const Task = ({ task }) => {
 
   const handleApproveTask = () =>
     dispatch(updateTaskState(task.id, COMPLETED_STATE));
+
+  const handleDisapproveTask = () =>
+    dispatch(updateTaskState(task.id, PROGRESS_STATE));
 
   const handleNote = () => setNotePopup(true);
 
@@ -238,13 +243,23 @@ const Task = ({ task }) => {
           </Button>
         )}
         {currentUser.profile === "FR" && task.state === REVIEW_STATE && (
-          <Button
-            onClick={handleApproveTask}
-            variant="contained"
-            style={{ marginLeft: "auto", backgroundColor: getColor() }}
-          >
-            Approve
-          </Button>
+          <>
+            <Tooltip title="Send remarks">
+              <IconButton aria-label="edit" onClick={handleDisapproveTask}>
+                <SendIcon />
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Approve solution">
+              <Button
+                onClick={handleApproveTask}
+                variant="contained"
+                style={{ marginLeft: "auto", backgroundColor: getColor() }}
+              >
+                Approve
+              </Button>
+            </Tooltip>
+          </>
         )}
       </CardActions>
       <Notes
