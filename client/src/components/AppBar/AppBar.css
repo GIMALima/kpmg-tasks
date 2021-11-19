@@ -1,5 +1,6 @@
 .css-n7rtur-MuiPaper-root-MuiAppBar-root,
-.css-o5srbh-MuiPaper-root-MuiAppBar-root {
+.css-o5srbh-MuiPaper-root-MuiAppBar-root,
+.css-1se5fxw {
   background-color: #fff !important;
 }
 
@@ -8,8 +9,23 @@
   clip-path: inset(0px 0px -15px 0px);
 }
 
-.css-jcn4dz-MuiBadge-badge {
+.css-jcn4dz-MuiBadge-badge,
+.css-zhwrlg {
   background-color: #0693e3 !important;
+}
+
+.css-1k9ek97,
+.css-1yo8bqd,
+.css-im4i5j {
+  background-color: #fff !important;
+}
+
+.css-1ontqvh {
+  padding: 0 !important;
+}
+
+.css-uhb5lp {
+  width: 100% !important;
 }
 
 .appBar__button {
