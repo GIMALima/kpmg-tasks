@@ -64,7 +64,7 @@ module.exports.deleteTask = (req, res) => {
 module.exports.uploadSolution = async (req, res) => {
   if (req.file !== null) {
     try {
-      if (req.file.detectedMimeType != "application/zip")
+      if (req.file.detectedMimeType !== "application/zip")
         throw Error("invalid file");
     } catch (err) {
       const errors = uploadErrors(err);

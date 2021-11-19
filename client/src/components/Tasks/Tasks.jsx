@@ -60,7 +60,7 @@ const Tasks = ({ setPopup, selectedState }) => {
           : null;
       setCompleted(comp);
 
-      selectedState != "all" ? setCount(1) : setCount(4);
+      selectedState !== "all" ? setCount(1) : setCount(4);
     }
   }, [selectedState, tasks]);
 
@@ -82,7 +82,7 @@ const Tasks = ({ setPopup, selectedState }) => {
                     <span className="tasks__count">{requests.length}</span>
                   </ListItemText>
                 </ListItem>
-                {requests.length == 0 && count != 4 && (
+                {requests.length === 0 && count !== 4 && (
                   <div style={{ paddingTop: "10px" }}>
                     There is no new request
                   </div>
@@ -122,7 +122,7 @@ const Tasks = ({ setPopup, selectedState }) => {
                     <span className="tasks__count">{progress.length}</span>
                   </ListItemText>
                 </ListItem>
-                {progress.length == 0 && count != 4 && (
+                {progress.length === 0 && count !== 4 && (
                   <div style={{ paddingTop: "10px" }}>
                     No task is in progress
                   </div>
@@ -149,7 +149,7 @@ const Tasks = ({ setPopup, selectedState }) => {
                     <span className="tasks__count">{review.length}</span>
                   </ListItemText>
                 </ListItem>
-                {review.length == 0 && count != 4 && (
+                {review.length === 0 && count !== 4 && (
                   <div style={{ paddingTop: "10px" }}>No task is in review</div>
                 )}
                 {review.map((task) => (
@@ -174,7 +174,7 @@ const Tasks = ({ setPopup, selectedState }) => {
                     <span className="tasks__count">{completed.length}</span>
                   </ListItemText>
                 </ListItem>
-                {completed.length == 0 && count != 4 && (
+                {completed.length === 0 && count !== 4 && (
                   <div style={{ paddingTop: "10px" }}>
                     No task was completed
                   </div>

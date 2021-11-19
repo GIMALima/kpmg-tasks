@@ -44,8 +44,8 @@ const Signin = () => {
   };
 
   const handleSignin = (userData) => {
-    const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
+    const emailError = document.querySelector(".email.form__error");
+    const passwordError = document.querySelector(".password.form__error");
 
     axios({
       method: "post",
