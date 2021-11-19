@@ -1,7 +1,7 @@
 const Note = require("../models/note.model");
 
 module.exports.getNotes = (req, res) => {
-  Note.getNote((err, notes) => {
+  Note.getNotes((err, notes) => {
     if (err) {
       res.status(400).send(err);
     } else res.status(200).send(notes);
