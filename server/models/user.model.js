@@ -10,7 +10,7 @@ var User = function (user) {
   this.email = user.email;
   this.password = user.password;
   this.profile = user.profile;
-  this.creation_date = new Date();
+  this.created_at = new Date();
   this.updated_at = new Date();
 };
 
