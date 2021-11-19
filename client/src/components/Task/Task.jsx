@@ -22,7 +22,6 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import SendIcon from "@mui/icons-material/Send";
-import ThumbDownAltIcon from "@mui/icons-material/ThumbDownAlt";
 import UploadSolution from "../UploadSolution/UploadSolution";
 import Notes from "../Notes/Notes";
 import {
@@ -53,6 +52,7 @@ const ExpandMore = styled((props) => {
 
 const Task = ({ task }) => {
   const notes = useSelector((state) => state.noteReducer);
+  const errors = useSelector((state) => state.errorReducer);
   const [expanded, setExpanded] = useState(false);
   const [popup, setPopup] = useState(false);
   const [notePopup, setNotePopup] = useState(false);
@@ -71,8 +71,9 @@ const Task = ({ task }) => {
   const handleSendRequest = () =>
     dispatch(updateTaskState(task.id, REQUEST_STATE));
 
-  const handleAssignTask = () =>
+  const handleAssignTask = () => {
     dispatch(assignTask(task.id, currentUser.id, PROGRESS_STATE));
+  };
 
   const handleApproveTask = () =>
     dispatch(updateTaskState(task.id, COMPLETED_STATE));
@@ -209,10 +210,10 @@ const Task = ({ task }) => {
             <ChatBubbleOutlineIcon />
           </IconButton>
         </Tooltip>
-        {currentUser.profile === "DZ" && !task.solution && (
+        {currentUser.profile === "DZ" && task.state === PROGRESS_STATE && (
           <UploadSolution key={task.id} task={task} />
         )}
-        {task.solution && (
+        {task.solution && task.state !== PROGRESS_STATE && (
           <Tooltip title={"Download solution " + task.solution}>
             <IconButton onClick={downloadSolution}>
               <FileDownloadIcon />

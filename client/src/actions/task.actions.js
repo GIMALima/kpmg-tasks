@@ -1,4 +1,5 @@
 import axios from "axios";
+import { REVIEW_STATE } from "../Constants";
 
 // Actions.
 export const GET_TASKS = "GET_TASKS";
@@ -11,6 +12,7 @@ export const ASSIGN_TASK = "ASSIGN_TASK";
 export const UPLOAD_SOLUTION = "UPLOAD_SOLUTION";
 
 // Errors.
+export const UPLOAD_ERRORS = "UPLOAD_ERRORS";
 export const GET_TASK_ERRORS = "GET_TASK_ERRORS";
 
 export const getAllTasks = () => {
@@ -110,10 +112,11 @@ export const uploadSolution = (taskId, data) => {
       .put(`${process.env.REACT_APP_API_URL}api/task/upload/${taskId}`, data)
       .then((res) => {
         if (res.data.errors) {
-          dispatch({ type: GET_TASK_ERRORS, payload: res.data.errors });
+          dispatch({ type: UPLOAD_ERRORS, payload: res.data.errors });
         } else {
-          dispatch({ type: GET_TASK_ERRORS, payload: "" });
+          dispatch({ type: UPLOAD_ERRORS, payload: "" });
           dispatch({ type: UPLOAD_SOLUTION, payload: res.data });
+          dispatch(updateTaskState(taskId, REVIEW_STATE));
         }
       })
       .catch((err) => console.log(err));

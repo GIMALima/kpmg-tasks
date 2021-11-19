@@ -1,14 +1,21 @@
-import { GET_TASK_ERRORS } from "../actions/task.actions";
+import { UPLOAD_ERRORS } from "../actions/task.actions";
 import { GET_NOTES_ERRORS } from "../actions/note.actions";
 
-const initialState = { userError: [], taskError: [], noteError: [] };
+const initialState = {
+  userError: [],
+  taskError: [],
+  noteError: [],
+  uploadError: [],
+};
 
 export default function errorReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_TASK_ERRORS:
+    case UPLOAD_ERRORS:
       return {
-        taskError: action.payload,
+        uploadError: action.payload,
         userError: [],
+        taskError: [],
+        noteError: [],
       };
 
     case GET_NOTES_ERRORS:
@@ -16,6 +23,7 @@ export default function errorReducer(state = initialState, action) {
         noteError: action.payload,
         taskError: [],
         userError: [],
+        uploadError: [],
       };
 
     default:

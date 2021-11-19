@@ -1,21 +1,30 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button, Tooltip } from "@mui/material";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FilePresentIcon from "@mui/icons-material/FilePresent";
-import { updateTaskState } from "../../actions/task.actions";
 import { uploadSolution } from "../../actions/task.actions";
-import { REVIEW_STATE } from "../../Constants";
 
 const UploadFile = ({ task }) => {
   const [file, setFile] = useState();
+  const [error, setError] = useState(false);
   const [save, setSave] = useState(false);
   const dispatch = useDispatch();
+  const errors = useSelector((state) => state.errorReducer);
 
   const handleChange = (e) => {
     e.preventDefault();
     setFile(e.target.files[0]);
-    setSave(!save);
+
+    if (
+      e.target.files[0].type === "application/zip" ||
+      e.target.files[0].type === "application/x-zip-compressed"
+    ) {
+      setSave(!save);
+      setError(false);
+    } else {
+      setError(true);
+    }
   };
 
   const handleFile = (e) => {
@@ -25,7 +34,6 @@ const UploadFile = ({ task }) => {
     data.append("file", file);
 
     dispatch(uploadSolution(task.id, data));
-    dispatch(updateTaskState(task.id, REVIEW_STATE));
   };
 
   return (
@@ -39,25 +47,32 @@ const UploadFile = ({ task }) => {
         type="file"
       />
       {!save && (
-        <label htmlFor={task.id} style={{ zIndex: "1000" }}>
-          <Tooltip title="Upload solution">
-            <Button variant="raised" component="span">
-              <FileUploadIcon style={{ color: "rgba(0, 0, 0, 0.54)" }} />
-            </Button>
-          </Tooltip>
-        </label>
+        <>
+          <span className="form__error">
+            {(errors.uploadError.length > 0 || error) && "Ivalid file format"}
+          </span>
+          <label htmlFor={task.id} style={{ zIndex: "1000" }}>
+            <Tooltip title="Upload solution">
+              <Button variant="raised" component="span">
+                <FileUploadIcon style={{ color: "rgba(0, 0, 0, 0.54)" }} />
+              </Button>
+            </Tooltip>
+          </label>
+        </>
       )}
-      {save && (
-        <Button
-          variant="contained"
-          type="submit"
-          style={{
-            backgroundColor: "#C55494",
-          }}
-          startIcon={<FilePresentIcon />}
-        >
-          Send solution
-        </Button>
+      {save && errors.uploadError.length === 0 && !error && (
+        <>
+          <Button
+            variant="contained"
+            type="submit"
+            style={{
+              backgroundColor: "#C55494",
+            }}
+            startIcon={<FilePresentIcon />}
+          >
+            Send solution
+          </Button>
+        </>
       )}
     </form>
   );

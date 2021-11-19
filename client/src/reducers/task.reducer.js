@@ -41,8 +41,19 @@ export default function taskReducer(state = initialState, action) {
       });
 
     case ASSIGN_TASK:
-    case UPLOAD_SOLUTION:
       return [...state, action.payload];
+
+    case UPLOAD_SOLUTION:
+      return state.map((task) => {
+        if (task.id === action.payload.id) {
+          return {
+            ...task,
+            state: action.payload.state,
+            solution: action.payload.solution,
+            updated_at: action.payload.updated_at,
+          };
+        } else return task;
+      });
 
     default:
       return state;
