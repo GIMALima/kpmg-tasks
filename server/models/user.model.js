@@ -1,5 +1,5 @@
 var con = require("../config/db.config");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 // User entity.
 var User = function (user) {

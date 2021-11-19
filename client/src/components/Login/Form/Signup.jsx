@@ -72,8 +72,8 @@ const Signup = () => {
   const handleChange = (event) => setProfile(event.target.value);
 
   const handleSignup = (userData) => {
-    const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
+    const emailError = document.querySelector(".email.form__error");
+    const passwordError = document.querySelector(".password.form__error");
 
     axios({
       method: "post",
@@ -119,8 +119,8 @@ const Signup = () => {
               {handleValidation() && (
                 <span className="form__error">{handleValidation()}</span>
               )}
-              <Typography className="email error"></Typography>
-              <Typography className="password error"></Typography>
+              <Typography className="email form__error"></Typography>
+              <Typography className="password form__error"></Typography>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
